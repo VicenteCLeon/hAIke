@@ -1,0 +1,495 @@
+<!DOCTYPE html><html class="dark" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>hAIke | Comunidad de Exploradores</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=DM+Serif+Display&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "secondary-fixed": "#a9f0e5",
+                "on-surface-variant": "#c0c9bd",
+                "primary": "#91d69d",
+                "on-secondary-fixed-variant": "#005049",
+                "surface-variant": "#313633",
+                "secondary-container": "#005850",
+                "on-secondary-fixed": "#00201c",
+                "on-secondary": "#003732",
+                "surface-container-highest": "#313633",
+                "secondary": "#8dd3c9",
+                "surface-container-low": "#181d1a",
+                "primary-container": "#5c9f6b",
+                "surface-tint": "#91d69d",
+                "on-background": "#dfe4de",
+                "on-tertiary-fixed": "#311300",
+                "on-secondary-container": "#86ccc1",
+                "outline-variant": "#404940",
+                "surface-container": "#1c211e",
+                "on-surface": "#dfe4de",
+                "inverse-primary": "#286b3c",
+                "inverse-on-surface": "#2c322e",
+                "on-primary": "#003918",
+                "on-error-container": "#ffdad6",
+                "error-container": "#93000a",
+                "tertiary": "#ffb688",
+                "on-primary-fixed-variant": "#075227",
+                "on-error": "#690005",
+                "tertiary-container": "#ca7f4b",
+                "on-tertiary-container": "#471e00",
+                "on-primary-container": "#003114",
+                "background": "#101412",
+                "surface-dim": "#101412",
+                "surface-container-high": "#262b28",
+                "surface": "#101412",
+                "secondary-fixed-dim": "#8dd3c9",
+                "tertiary-fixed-dim": "#ffb688",
+                "on-tertiary": "#512400",
+                "primary-fixed": "#acf3b8",
+                "error": "#ffb4ab",
+                "primary-fixed-dim": "#91d69d",
+                "outline": "#8a9389",
+                "on-primary-fixed": "#00210b",
+                "surface-bright": "#353a37",
+                "tertiary-fixed": "#ffdbc7",
+                "on-tertiary-fixed-variant": "#703708",
+                "inverse-surface": "#dfe4de",
+                "surface-container-lowest": "#0a0f0d"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "gutter": "16px",
+                "md": "24px",
+                "margin-desktop": "64px",
+                "lg": "48px",
+                "xs": "4px",
+                "sm": "12px",
+                "xl": "80px",
+                "margin-mobile": "20px",
+                "base": "8px"
+            },
+            "fontFamily": {
+                "body-md": ["DM Sans"],
+                "display-lg": ["DM Serif Display"],
+                "body-lg": ["DM Sans"],
+                "title-lg": ["DM Sans"],
+                "headline-md": ["DM Serif Display"],
+                "headline-sm": ["DM Serif Display"],
+                "label-md": ["DM Sans"],
+                "technical-mono": ["DM Sans"],
+                "display-lg-mobile": ["DM Serif Display"]
+            },
+            "fontSize": {
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "400"}],
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                "technical-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                "display-lg-mobile": ["36px", {"lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .topo-bg {
+            background-image: url('https://lh3.googleusercontent.com/aida/ADBb0ujgnlJHX_nwLrLxWzCzaGI_WeRklR1iVKorPMt2dqBU4Oxqh1ARH9RGeCedGautrzuZjNZUekJISi1FJMamO27qp06zUu1bTWvUdlLj2bd9I4YzcqgrmYMlmn7rY8fQVfjDvogYoMCchf2p6X4D5vg8RSzMp81J5nSFvdXTfAxY3na481HvnCFrkTmM3nPO1Gp0bLiGqzvHDKUy1YJh7dxYoPnMgon7yC-id10l2G5Kz0sKPuZTz6YWZzo');
+            background-blend-mode: overlay;
+            background-size: 600px;
+            opacity: 0.04;
+        }
+        .technical-border {
+            border: 1px solid #4a554d;
+        }
+        .card-gradient {
+            background: linear-gradient(135deg, rgba(28, 33, 30, 1) 0%, rgba(24, 29, 26, 1) 100%);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-margin-desktop py-base">
+<div class="flex items-center gap-lg">
+<span class="font-display-lg text-display-lg text-primary tracking-tighter">hAIke</span>
+<div class="hidden md:flex items-center gap-md">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container-high border-none rounded-lg pl-xl pr-md py-xs text-body-md focus:ring-1 focus:ring-primary w-64 transition-all" placeholder="Buscar expediciones..." type="text">
+</div>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-variant border border-outline-variant overflow-hidden">
+<img alt="Avatar del usuario" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWCXym8hZUnnCabAfjkq-axk1SFv4V5EBmRpgwQYQHsWxxScqQixiCgpkZgGsAc3quKAsH9fXlW40MGPLsAqshzoBsUUantG4oK-CEaq7FJ9_EduyPJ4xvIl9dwb2JPAQb1OzWfh6H41FsK9QouUy5rBmKmYz48BJov0b2CvqYgPza6_Hs-ZnE_in8IruGr2aTJPHvHKEp2EHSCFgTT08l5_zdTICdh4NB9WMQZq1Xyk8b6CVKRlr0v977ydNtN_D-2ZY0v1cE6hU">
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-container border-r border-outline-variant flex flex-col py-lg z-40 pt-24">
+<div class="px-md mb-lg">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-technical-mono text-technical-mono uppercase text-primary">hAIke Navigator</span>
+</div>
+<p class="font-technical-mono text-technical-mono uppercase text-on-surface-variant">Altitud: 2,450m</p>
+</div>
+<nav class="flex-1 px-sm space-y-xs">
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-technical-mono text-technical-mono uppercase">Explorar</span>
+</a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">terrain</span>
+<span class="font-technical-mono text-technical-mono uppercase">Mis Rutas</span>
+</a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-technical-mono text-technical-mono uppercase">Planificador</span>
+</a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">backpack</span>
+<span class="font-technical-mono text-technical-mono uppercase">Equipamiento</span>
+</a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">cloudy_snowing</span>
+<span class="font-technical-mono text-technical-mono uppercase">Clima</span>
+</a>
+<a class="bg-secondary-container text-on-secondary-container flex items-center gap-base px-md py-sm rounded-lg" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-technical-mono text-technical-mono uppercase">Comunidad</span>
+</a>
+</nav>
+<div class="px-md mt-auto pt-lg space-y-md">
+<button class="w-full bg-primary text-on-primary py-sm rounded-lg font-technical-mono text-technical-mono uppercase hover:opacity-90 transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Nueva Ruta
+            </button>
+<div class="space-y-xs">
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-technical-mono text-technical-mono uppercase">Ajustes</span>
+</a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-technical-mono text-technical-mono uppercase">Cerrar Sesión</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 min-h-screen relative">
+<!-- Subsurface topo texture -->
+<div class="absolute inset-0 topo-bg pointer-events-none" style="transform: translate(-3.09px, -2.4525px);"></div>
+<div class="px-margin-desktop py-lg relative z-10">
+<!-- Header Section -->
+<header class="mb-xl">
+<div class="inline-block bg-surface-container-high px-sm py-xs technical-border mb-base">
+<span class="font-technical-mono text-technical-mono uppercase text-secondary">Base Camp Hub</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface mb-sm">Comunidad de Exploradores</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    Conecta con montañeros experimentados y comparte tus expediciones. El conocimiento técnico es la mejor brújula en terreno desconocido.
+                </p>
+</header>
+<div class="grid grid-cols-12 gap-lg">
+<!-- Center Column: Groups & Feed -->
+<div class="col-span-12 lg:col-span-8 space-y-xl">
+<!-- Grupos Destacados -->
+<section>
+<div class="flex justify-between items-end mb-md">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Grupos Destacados</h2>
+<button class="font-technical-mono text-technical-mono uppercase text-primary hover:underline">Ver todos</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Group Card 1 -->
+<div class="card-gradient technical-border p-md group hover:border-primary transition-colors cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-bl-full translate-x-4 -translate-y-4"></div>
+<div class="flex items-start justify-between mb-sm">
+<div class="w-12 h-12 bg-surface-container-highest flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-primary">landscape</span>
+</div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant bg-surface-container px-xs py-[2px] border border-outline-variant">TECHNICAL_LEVEL: 05</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-xs">Alpinismo Técnico</h3>
+<p class="text-on-surface-variant text-body-md mb-md">Expertos en alta montaña y rutas de grado superior. Foco en seguridad y rescate.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex -space-x-2">
+<img alt="Miembro" class="w-8 h-8 rounded-full border-2 border-surface-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-rcnwabqtskkbDu3PVYaKVyGs6AT3jMMhGBVlcM_GmBrTN4LzLLGBxlNs2B5sXAup5MXiqCVQ1YYV4ynvj9rSxnBtX89Q1S6e80SXOcOs_4LrSt3MYAp2c_54ihn0K_8Q0zKztvMCi0ZeU4j-xUwsh5W_-aWXdaSl1dIw_kRZFsfmH7SDrixKMDlO_jMnrDo4B8f23YD3sfHMpYEMbxRDydRZ1D9mDJKILjWNFDcdGtqusJDsn0WyKEUlp8pqxJbyevAjlY9hTH8">
+<img alt="Miembro" class="w-8 h-8 rounded-full border-2 border-surface-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCalLwbmPZEEv8z0OkcGhVShG4Xr3Ak9d8BzgImKC1jKn7cWnKtptjCOZXCmEdUOIb9HTJV28qF3rpmSVt36OD7V7neJrAyiitkw6Rq-Xmo2LJ7Bx3PSr3w1zwYQi9snvJyXxjbzqPnVUdyT5qQVsUFlzFgT_sp0jLELMYDm8JLK4qHgK2sXkZcEvKQByFpTygwtoEQFmzAA3gHWhAXW-_tVLdXSNEEduu08biWGBsUtKlqUbAbS7nGTF9rjdTtznrdUN-YV87hcfM">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+42</div>
+</div>
+<span class="font-technical-mono text-technical-mono text-on-surface-variant">Activo hace 2h</span>
+</div>
+</div>
+<!-- Group Card 2 -->
+<div class="card-gradient technical-border p-md group hover:border-secondary transition-colors cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-secondary/5 rounded-bl-full translate-x-4 -translate-y-4"></div>
+<div class="flex items-start justify-between mb-sm">
+<div class="w-12 h-12 bg-surface-container-highest flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-secondary">backpack</span>
+</div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant bg-surface-container px-xs py-[2px] border border-outline-variant">PHILOSOPHY: LNT</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-xs">Senderismo Ultra-light</h3>
+<p class="text-on-surface-variant text-body-md mb-md">Optimización de carga y equipo minimalista para travesías de larga distancia.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex -space-x-2">
+<img alt="Miembro" class="w-8 h-8 rounded-full border-2 border-surface-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR1mj77zMaIkqwHhWe3VDpSUcU490CvDSSwMyX4kTat6duIfMBrGwVQ1bvv3nYv01wfyCKp_cJKoWoogsDEnyf9-1xrI_FDxM4rLwcbPcVCnahmzb-ye9LOsajHM3Supkoo5rnf45zEg646QyNA2fRk8IbyFR5mKADYV7vN7s_59FPtlXTrhwdAXg_B-vqLO-cEeR2jZrL4Xg6aSqQV9UFSjMAlS87W-lw9vhlwtsLpODSUG3LbrV8ZlqBqP9uU4lkJl7oCgXptwE">
+<img alt="Miembro" class="w-8 h-8 rounded-full border-2 border-surface-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy1ooIIXktVYX83XOkoSGxSJeO0Zc13p_69VLiPffo9_YH_GyhzDoBfDNYe5MLVC6wOQb9y0bJEovEcWWSOr7sz1avotJBtMrMiezT7sQDicuQcHVUQK9VxaXx2X40Fa3Kb8qIB2n5mHVMhEaTZwdkwU_PfmhVoGqYcokk6Jeig2wai3_8VjY3Ik2qkOdB2InD5f1u89__HEYDS0bWsVRcp6AQYzCFvZq11Dcm2jqu4SDxBo_BKYTdtr3rrzFaSe0Bhr2BeE7oB1M">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+156</div>
+</div>
+<span class="font-technical-mono text-technical-mono text-on-surface-variant">Activo ahora</span>
+</div>
+</div>
+</div>
+</section><section class="mt-xl">
+  <div class="flex justify-between items-end mb-md">
+    <h2 class="font-headline-sm text-headline-sm text-on-surface">Tips Técnicos &amp; Recetas</h2>
+    <button class="font-technical-mono text-technical-mono uppercase text-primary hover:underline">Explorar todo</button>
+  </div>
+  <div class="flex gap-md overflow-x-auto pb-md scrollbar-hide">
+    <!-- Tip Card 1 -->
+    <div class="min-w-[280px] flex-shrink-0 card-gradient technical-border p-md relative overflow-hidden group hover:border-primary transition-colors cursor-pointer">
+      <div class="absolute inset-0 topo-bg opacity-10 pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="w-10 h-10 bg-secondary-container/30 flex items-center justify-center rounded-lg mb-sm border border-secondary/20">
+          <span class="material-symbols-outlined text-secondary">ac_unit</span>
+        </div>
+        <h4 class="font-title-lg text-[18px] text-on-surface mb-xs leading-tight group-hover:text-primary transition-colors">Tip: Gestión de capas en frío extremo</h4>
+        <p class="text-body-md text-on-surface-variant text-sm line-clamp-2">Aprende la técnica de 'fuelle' para evacuar humedad sin perder calor residual en cotas &gt;4000m.</p>
+      </div>
+    </div>
+    <!-- Recipe Card 1 -->
+    <div class="min-w-[280px] flex-shrink-0 card-gradient technical-border p-md relative overflow-hidden group hover:border-tertiary transition-colors cursor-pointer">
+      <div class="absolute inset-0 topo-bg opacity-10 pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="w-10 h-10 bg-tertiary-container/20 flex items-center justify-center rounded-lg mb-sm border border-tertiary/20">
+          <span class="material-symbols-outlined text-tertiary">skillet</span>
+        </div>
+        <h4 class="font-title-lg text-[18px] text-on-surface mb-xs leading-tight group-hover:text-tertiary transition-colors">Receta: Liofilizado Casero Energético</h4>
+        <p class="text-body-md text-on-surface-variant text-sm line-clamp-2">Mix de quinoa roja, frutos secos y especias termogénicas para recuperación rápida post-ascenso.</p>
+      </div>
+    </div>
+    <!-- Tip Card 2 -->
+    <div class="min-w-[280px] flex-shrink-0 card-gradient technical-border p-md relative overflow-hidden group hover:border-primary transition-colors cursor-pointer">
+      <div class="absolute inset-0 topo-bg opacity-10 pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="w-10 h-10 bg-secondary-container/30 flex items-center justify-center rounded-lg mb-sm border border-secondary/20">
+          <span class="material-symbols-outlined text-secondary">visibility</span>
+        </div>
+        <h4 class="font-title-lg text-[18px] text-on-surface mb-xs leading-tight group-hover:text-primary transition-colors">Tip: Lectura de grietas en glaciar</h4>
+        <p class="text-body-md text-on-surface-variant text-sm line-clamp-2">Identificación de puentes de nieve débiles mediante patrones de sombras en luz rasante.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Feed de Actividad -->
+<section class="space-y-md">
+<div class="flex items-center gap-md border-b border-outline-variant pb-xs mb-lg">
+<button class="font-technical-mono text-technical-mono uppercase text-primary border-b-2 border-primary pb-sm">Reciente</button>
+<button class="font-technical-mono text-technical-mono uppercase text-on-surface-variant pb-sm hover:text-on-surface transition-colors">Tendencias</button>
+<button class="font-technical-mono text-technical-mono uppercase text-on-surface-variant pb-sm hover:text-on-surface transition-colors">Técnico</button>
+</div>
+<!-- Post 1 -->
+<article class="bg-surface-container-low technical-border overflow-hidden">
+<div class="p-md flex gap-md">
+<img alt="User" class="w-12 h-12 rounded-lg object-cover flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe14cOjvJivMfm8x64jY79jIAEverlMZga58RqUcpu5cyhTkIXKxgTHfhuTSX3V6tFxTtg4kShzz-sceE735UUOJYmtoCF4VhzYOo6QnCdoPNebRO1YTqhOL-630j28AulM4Y0QCBUyyGrx1AwyaNQEfwg1CRDIDMGItIc8kihMLKnjF_cAgoJqCCfnMBFE8WhxjxjWjuHzoZTQcqpvGX48Fdwd_0VxyrYOWGKoGv1mH8VBIYTiH6IU3ju02H76yuCFOoJhFMdKlg">
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<div>
+<h4 class="font-title-lg text-title-lg leading-none mb-xs">Erik "Iceman" Jørgensen</h4>
+<span class="font-technical-mono text-[10px] text-on-surface-variant uppercase">Especialista Glaciares | @erik_exp</span>
+</div>
+<span class="font-technical-mono text-technical-mono text-on-surface-variant">4h ago</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-md leading-relaxed">
+                                        Reseña rápida: Acabo de probar la nueva carcasa técnica en la ascensión al Pico Sur. El aislamiento térmico es excelente, pero el sistema de ventilación lateral requiere guantes más finos para manipularlo con precisión. ¿Alguien más ha notado rigidez en las cremalleras a -15°C?
+                                    </p>
+<div class="aspect-video w-full rounded-lg overflow-hidden technical-border mb-md">
+<img class="w-full h-full object-cover" data-alt="A dramatic wide-angle shot of a snow-covered mountain peak at sunset, featuring sharp granite ridges and deep blue ice crevices. The lighting is cold and crisp with golden hour highlights on the summits, embodying a technical mountaineering aesthetic with high contrast and extreme clarity. The atmosphere is silent, majestic, and ruggedly beautiful." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmtKry9CldssIU1qVdCqkyKCS59krWGSC_152_ff2vua_f5jRYJjAn43uIngvUr5lc17wZ6m8soHQFhyx_rgXyGBcIfBYt4X14lCVDmC37ixINma4qSFzyiojQqwCJnuYsi04m__P3SGW9EcUrHR1u3A_AMS8S0jx1YO94S5abfOehlKtaFIHvHNgZs9sF_LnB4mrXm4VvIe8pf9NVXXKTMUb4qrxrd2jLJXhu1eprqpw7NkcUFhfa5f7f7L5FILYjOsnnwx_Aaqk">
+</div>
+<div class="flex items-center gap-lg">
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">thumb_up</span>
+<span class="font-technical-mono text-technical-mono">124</span>
+</button>
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+<span class="font-technical-mono text-technical-mono">18</span>
+</button>
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[20px]">share</span>
+<span class="font-technical-mono text-technical-mono">Share</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Post 2 (Text Only Question) -->
+<article class="bg-surface-container-low technical-border p-md flex gap-md">
+<img alt="User" class="w-12 h-12 rounded-lg object-cover flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBAFakJDZ8H366n89MxjLUjckCxtRR947HRO2zPJrNFuFRow0iQFLl-HmkqNJJFwRVOKahbUv0wofX4ORU0JPxMLmSzjsjNvjmd7vdhrzD3NVjuqhPw2g8izhdkB6YMvDY2ai-ezlYRJxWJJ9METOXBinMklTlU6c2SY-DQZQ1B5nvR1_qpunRPofAn5_BMHFb6UZXJ2tb0RS8nONolQYKuiqI5GoZbaydC7S_IoEE8A5Z7WZD-zEDw19I4mAP4PLSMaajngTfR_U">
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<div>
+<h4 class="font-title-lg text-title-lg leading-none mb-xs">Mara Silva</h4>
+<span class="font-technical-mono text-[10px] text-on-surface-variant uppercase">Planificadora de Rutas</span>
+</div>
+<span class="font-technical-mono text-technical-mono text-on-surface-variant">8h ago</span>
+</div>
+<div class="bg-surface-variant/30 p-md rounded-lg mb-md technical-border">
+<span class="font-technical-mono text-[10px] text-tertiary mb-xs block uppercase">TECHNICAL_QUESTION</span>
+<p class="text-body-md text-on-surface font-medium italic">
+                                        "¿Alguien tiene el track GPX actualizado del paso de 'Los Quebrantahuesos'? He oído que hubo un desprendimiento leve la semana pasada."
+                                    </p>
+</div>
+<div class="flex items-center gap-lg">
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+<span class="font-technical-mono text-technical-mono">5 Respuestas</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+</div>
+<!-- Right Sidebar: Trekker of the Month & Events -->
+<aside class="col-span-12 lg:col-span-4 space-y-xl">
+<!-- Trekker del Mes -->
+<div class="bg-surface-container-highest technical-border p-md relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-1 bg-primary"></div>
+<h2 class="font-technical-mono text-technical-mono text-on-surface-variant uppercase mb-md tracking-widest">Trekker del Mes</h2>
+<div class="text-center">
+<div class="relative inline-block mb-md">
+<div class="w-24 h-24 rounded-full border-2 border-primary p-1">
+<img alt="Trekker del Mes" class="w-full h-full rounded-full bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQmsvLwU6PLBF0-l2W9SQGcjTDomJ4Do2aazLxO1wVQPzvVCBM0D69oX9duZs_9xlB2X2Pp_PlRZbZnOu2c2A4v7BCeHiGQdVJh5Er7YWfLUgHNf9IRbomPSTwNjnz4ZW3jnbLqzQdjR_eEDbrrgCpkIbR9r8DdJ7yyoFbpuwjgVpjTYJ_iODN-bxHrv3VvBA-Yg5kQA-eudNDY5x0XN_vDW3MvD66n0TeWxUkJM9LgF0a0JyE165-LaCHQ7I4ZyIaHf5pZhBPCFY">
+</div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-on-primary rounded-full p-1">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-xs">Sam O'Connell</h3>
+<p class="font-technical-mono text-[10px] text-primary uppercase mb-md">Ascensiones: 42 | Rescate Voluntario</p>
+<div class="grid grid-cols-2 gap-sm text-left bg-background/50 p-sm rounded border border-outline-variant">
+<div>
+<p class="font-technical-mono text-[10px] text-on-surface-variant uppercase">Km este mes</p>
+<p class="font-title-lg text-title-lg">248.5</p>
+</div>
+<div>
+<p class="font-technical-mono text-[10px] text-on-surface-variant uppercase">Elevación (m)</p>
+<p class="font-title-lg text-title-lg">12,400</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Próximos Eventos -->
+<div class="space-y-md">
+<div class="flex items-center justify-between border-b border-outline-variant pb-xs">
+<h2 class="font-headline-sm text-headline-sm">Expediciones</h2>
+<span class="material-symbols-outlined text-on-surface-variant">calendar_month</span>
+</div>
+<!-- Event 1 -->
+<div class="flex gap-md group cursor-pointer border-b border-outline-variant pb-md hover:border-secondary transition-all">
+<div class="bg-surface-container-high w-16 h-16 flex-shrink-0 flex flex-col items-center justify-center technical-border">
+<span class="font-technical-mono text-technical-mono text-secondary">DIC</span>
+<span class="font-headline-sm text-headline-sm leading-none">12</span>
+</div>
+<div class="flex-1">
+<h4 class="font-title-lg text-title-lg group-hover:text-secondary transition-colors">Travesía Nocturna Glaciar</h4>
+<div class="flex items-center gap-xs text-on-surface-variant mt-xs">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+<span class="font-technical-mono text-[10px] uppercase">Parque Nacional Nevados</span>
+</div>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="flex gap-md group cursor-pointer border-b border-outline-variant pb-md hover:border-secondary transition-all">
+<div class="bg-surface-container-high w-16 h-16 flex-shrink-0 flex flex-col items-center justify-center technical-border">
+<span class="font-technical-mono text-technical-mono text-secondary">ENE</span>
+<span class="font-headline-sm text-headline-sm leading-none">05</span>
+</div>
+<div class="flex-1">
+<h4 class="font-title-lg text-title-lg group-hover:text-secondary transition-colors">Taller: Supervivencia Nivel II</h4>
+<div class="flex items-center gap-xs text-on-surface-variant mt-xs">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span class="font-technical-mono text-[10px] uppercase">Sierra Madre - Campo Base</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Quick-View -->
+<div class="bg-surface-variant/20 p-md technical-border">
+<h4 class="font-technical-mono text-technical-mono text-on-surface-variant uppercase mb-md">Actividad Global</h4>
+<div class="h-32 flex items-end justify-between gap-xs px-xs">
+<div class="w-full bg-primary/20 hover:bg-primary h-1/2 transition-all rounded-t-sm" title="Lun"></div>
+<div class="w-full bg-primary/20 hover:bg-primary h-3/4 transition-all rounded-t-sm" title="Mar"></div>
+<div class="w-full bg-primary/20 hover:bg-primary h-2/3 transition-all rounded-t-sm" title="Mie"></div>
+<div class="w-full bg-primary/20 hover:bg-primary h-full transition-all rounded-t-sm" title="Jue"></div>
+<div class="w-full bg-primary/20 hover:bg-primary h-4/5 transition-all rounded-t-sm" title="Vie"></div>
+<div class="w-full bg-primary/20 hover:bg-primary h-1/3 transition-all rounded-t-sm" title="Sab"></div>
+<div class="w-full bg-primary/20 hover:bg-primary h-2/3 transition-all rounded-t-sm" title="Dom"></div>
+</div>
+<p class="font-technical-mono text-[10px] text-center text-on-surface-variant mt-sm">Frecuencia de expediciones registradas</p>
+</div>
+</aside>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full px-margin-desktop py-lg flex flex-col md:flex-row justify-between items-center gap-md border-t border-outline-variant mt-xl bg-background">
+<div class="flex items-center gap-md">
+<span class="font-headline-sm text-headline-sm text-on-surface">hAIke</span>
+<span class="font-technical-mono text-technical-mono text-on-surface-variant">© 2024 hAIke Technical Expeditions.</span>
+</div>
+<div class="flex gap-md">
+<a class="font-technical-mono text-technical-mono text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Privacidad</a>
+<a class="font-technical-mono text-technical-mono text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Términos de Servicio</a>
+<a class="font-technical-mono text-technical-mono text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">API Técnica</a>
+</div>
+</footer>
+</main>
+<!-- Floating Action Button for Mobile Context -->
+<button class="fixed bottom-lg right-lg bg-primary text-on-primary w-14 h-14 rounded-full shadow-lg flex items-center justify-center z-50 md:hidden">
+<span class="material-symbols-outlined">add</span>
+</button>
+<script>
+        // Micro-interaction for the stats chart
+        document.querySelectorAll('.h-full, .h-1\\/2, .h-3\\/4, .h-2\\/3, .h-4\\/5, .h-1\\/3').forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.classList.add('scale-y-110');
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.classList.remove('scale-y-110');
+            });
+        });
+
+        // Atmospheric effect: Subtle movement on topo background
+        window.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.005;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.005;
+            document.querySelector('.topo-bg').style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    </script>
+
+
+</body></html>

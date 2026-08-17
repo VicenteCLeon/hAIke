@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>hAIke - Smart Packing List</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Custom Checkbox */
+        .tech-checkbox:checked + div {
+            background-color: theme('colors.primary-container');
+            border-color: theme('colors.primary-container');
+        }
+        .tech-checkbox:checked + div svg {
+            opacity: 1;
+        }
+    </style>
+<!-- Tailwind Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-primary-fixed-variant": "#075227",
+                "secondary-fixed": "#a9f0e5",
+                "inverse-surface": "#dfe4de",
+                "surface-variant": "#313633",
+                "on-tertiary-fixed": "#311300",
+                "surface-tint": "#91d69d",
+                "outline-variant": "#404940",
+                "tertiary-container": "#ca7f4b",
+                "primary": "#91d69d",
+                "secondary-fixed-dim": "#8dd3c9",
+                "surface-container-lowest": "#0a0f0d",
+                "primary-fixed": "#acf3b8",
+                "on-secondary": "#003732",
+                "on-error": "#690005",
+                "on-secondary-fixed": "#00201c",
+                "on-primary-fixed": "#00210b",
+                "on-primary-container": "#003114",
+                "tertiary-fixed-dim": "#ffb688",
+                "on-error-container": "#ffdad6",
+                "surface-dim": "#101412",
+                "surface-container": "#1c211e",
+                "background": "#101412",
+                "outline": "#8a9389",
+                "on-primary": "#003918",
+                "surface-bright": "#353a37",
+                "inverse-on-surface": "#2c322e",
+                "on-tertiary": "#512400",
+                "on-secondary-container": "#86ccc1",
+                "surface-container-highest": "#313633",
+                "secondary": "#8dd3c9",
+                "primary-fixed-dim": "#91d69d",
+                "error-container": "#93000a",
+                "error": "#ffb4ab",
+                "tertiary-fixed": "#ffdbc7",
+                "tertiary": "#ffb688",
+                "on-surface": "#dfe4de",
+                "on-surface-variant": "#c0c9bd",
+                "surface-container-high": "#262b28",
+                "on-tertiary-container": "#471e00",
+                "on-secondary-fixed-variant": "#005049",
+                "surface": "#101412",
+                "surface-container-low": "#181d1a",
+                "secondary-container": "#005850",
+                "on-tertiary-fixed-variant": "#703708",
+                "on-background": "#dfe4de",
+                "inverse-primary": "#286b3c",
+                "primary-container": "#5c9f6b"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "margin-mobile": "20px",
+                "gutter": "16px",
+                "lg": "48px",
+                "md": "24px",
+                "xs": "4px",
+                "sm": "12px",
+                "xl": "80px",
+                "margin-desktop": "64px",
+                "base": "8px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "DM Sans"
+                ],
+                "label-md": [
+                        "DM Sans"
+                ],
+                "display-lg": [
+                        "DM Serif Display"
+                ],
+                "technical-mono": [
+                        "DM Sans"
+                ],
+                "title-lg": [
+                        "DM Sans"
+                ],
+                "body-lg": [
+                        "DM Sans"
+                ],
+                "headline-md": [
+                        "DM Serif Display"
+                ],
+                "display-lg-mobile": [
+                        "DM Serif Display"
+                ],
+                "headline-sm": [
+                        "DM Serif Display"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "400"
+                        }
+                ],
+                "technical-mono": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.1em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "title-lg": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "display-lg-mobile": [
+                        "36px",
+                        {
+                                "lineHeight": "42px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-sm": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+</head>
+<body class="bg-surface text-on-surface font-body-lg min-h-screen antialiased flex selection:bg-primary selection:text-on-primary">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-screen fixed left-0 top-0 py-base bg-surface-container-lowest text-primary docked left-0 h-full w-64 border-r border-outline-variant flat no shadows z-50">
+<div class="px-gutter pb-8 pt-4">
+<div class="flex items-center gap-3 mb-2">
+<img alt="User Profile" class="w-10 h-10 rounded-full object-cover border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh7_sjM96MwOkQKGEM3q35CliV3JwpZ6SWgo4RgXdjwbkKz2aNo0Jl50HfSDDxJDRXBy-NbGZTR-w9SIc-7clqKk4h2Uz94C3PdnrW4Rah9dGwzJFBlPSkM5ChVtiUv_-_hDWXGnLAGhdihs5iPRkQku0l3FWDcelT6A6T7eW0RnbVsFE6X-HL7nspPTo_sqqCuYq0QeSHWzA_Ctzm5sS-GC0Mu2Y0nWKgfclklov9YVUCn2hNwPbgazghU2wVYC3yq0KzXT7qr9w"/>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary-fixed italic">hAIke</h1>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase text-[10px]">Technical Organic Trekking</p>
+</div>
+</div>
+</div>
+<ul class="flex-1 px-base space-y-1">
+<!-- Explore -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-title-lg text-[16px]">Explore</span>
+</a>
+</li>
+<!-- My Routes -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-title-lg text-[16px]">My Routes</span>
+</a>
+</li>
+<!-- Planner -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-title-lg text-[16px]">Planner</span>
+</a>
+</li>
+<!-- Gear (ACTIVE) -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-surface-container-low text-primary-fixed font-bold border-r-2 border-primary-fixed hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handyman</span>
+<span class="font-title-lg text-[16px]">Gear</span>
+</a>
+</li>
+<!-- Weather -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">cloudy_snowing</span>
+<span class="font-title-lg text-[16px]">Weather</span>
+</a>
+</li>
+<!-- Community -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-title-lg text-[16px]">Community</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col min-h-screen md:ml-64 w-full md:w-[calc(100%-16rem)]">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-margin-desktop bg-surface-container-lowest text-primary docked top-0 w-full border-b border-outline-variant flat no shadows z-40 sticky top-0">
+<div class="flex items-center">
+<span class="font-headline-md text-headline-md text-primary-fixed italic md:hidden mr-4">hAIke</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary-fixed transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary-fixed transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="Trekker Profile" class="w-8 h-8 rounded-full border border-outline-variant md:hidden" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwABWIAcJVVsYEkIMR_q-GGIl9MxiU4iV1UAz6uUbLlNnuwKxgb2cRE-xJlMAr4IcEzR0hmV0Wq37dDzCstqaSxDdPfvQvXxCsRKdru2ZFD8yQJFC6Wvirxfn6adKyGNwNGjedBkqO0I1Nx3COtdMeOdjRkFFB-Y-U-neFoHdi6VIOKy5d-Qt1S-gJvrk_i3hyTKUj8eReTZmmQWysCcVVh41OuhS1U9UP2ZASOuZ7coaurTuhoZ03ESytvBzQNi-Rb41pQczkVes"/>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-margin-desktop space-y-gutter">
+<!-- Header Section -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-outline-variant/50">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">Lista de Equipaje</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Gestión inteligente de carga basada en predicciones de la ruta. Optimizado para máximo rendimiento.</p>
+</div>
+<!-- Season Toggle -->
+<div class="inline-flex bg-surface-container-high rounded p-1 border border-outline-variant self-start lg:self-end">
+<button class="px-6 py-2 rounded-sm bg-surface text-primary font-title-lg text-[14px] border border-outline-variant shadow-sm transition-all">Verano</button>
+<button class="px-6 py-2 rounded-sm text-on-surface-variant font-title-lg text-[14px] hover:text-primary transition-all">Invierno</button>
+</div>
+</div>
+<!-- Progress Bar Section -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-6 relative overflow-hidden">
+<div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="w-full">
+<div class="flex justify-between items-end mb-3">
+<span class="font-title-lg text-title-lg text-on-surface">Carga Actual</span>
+<div class="text-right">
+<span class="font-display-lg text-display-lg text-primary leading-none">8.2<span class="text-title-lg">kg</span></span>
+<span class="font-technical-mono text-technical-mono text-secondary ml-2">/ Rec: 10.0kg</span>
+</div>
+</div>
+<!-- Linear Progress -->
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden border border-outline-variant/50">
+<div class="h-full bg-primary relative" style="width: 82%;">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent to-white/20"></div>
+</div>
+</div>
+</div>
+<div class="hidden md:flex flex-shrink-0 flex-col items-center justify-center p-4 rounded border border-primary/20 bg-primary/5">
+<span class="material-symbols-outlined text-primary mb-1">check_circle</span>
+<span class="font-label-md text-label-md text-primary text-center leading-tight">Rango<br/>Óptimo</span>
+</div>
+</div>
+</div>
+<!-- Packing Grid (Bento Style) -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-gutter">
+<!-- Category: Refugio -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-6 flex flex-col gap-4">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-tertiary">holiday_village</span>
+<h3 class="font-title-lg text-title-lg text-on-surface">Refugio &amp; Dormir</h3>
+<span class="ml-auto font-technical-mono text-technical-mono text-secondary">2.4kg</span>
+</div>
+<ul class="space-y-3">
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input checked="" class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface line-through text-on-surface-variant">Saco de dormir (-5°C)</p>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">1200g</span>
+</li>
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface">Esterilla inflable R-Value 4</p>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">450g</span>
+</li>
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<p class="font-body-md text-body-md text-on-surface">Tienda ultraligera 1P</p>
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-md text-[10px] uppercase">Recomendado por hAIke IA</span>
+</div>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">750g</span>
+</li>
+</ul>
+</div>
+<!-- Category: Ropa -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-6 flex flex-col gap-4">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-tertiary">checkroom</span>
+<h3 class="font-title-lg text-title-lg text-on-surface">Ropa Técnica</h3>
+<span class="ml-auto font-technical-mono text-technical-mono text-secondary">1.8kg</span>
+</div>
+<ul class="space-y-3">
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input checked="" class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface line-through text-on-surface-variant">Capa base lana merino x2</p>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">400g</span>
+</li>
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface">Chaqueta Hardshell Gore-Tex</p>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">350g</span>
+</li>
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface">Pantalones de trekking convertibles</p>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">320g</span>
+</li>
+</ul>
+</div>
+<!-- Category: Comida & Hidratación -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-6 flex flex-col gap-4 xl:col-span-2">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-tertiary">restaurant</span>
+<h3 class="font-title-lg text-title-lg text-on-surface">Comida &amp; Hidratación</h3>
+<span class="ml-auto font-technical-mono text-technical-mono text-secondary">3.1kg</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface">Liofilizados (Cenas x3)</p>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">450g</span>
+</li>
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<p class="font-body-md text-body-md text-on-surface">Filtro de agua por gravedad</p>
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-md text-[10px] uppercase">Recomendado por hAIke IA</span>
+</div>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">320g</span>
+</li>
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface">Sales y Electrolitos</p>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">100g</span>
+</li>
+<li class="flex items-start gap-4 p-2 hover:bg-surface-container-high rounded transition-colors group">
+<label class="relative flex items-center cursor-pointer mt-1">
+<input checked="" class="tech-checkbox opacity-0 absolute w-0 h-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-sm border border-outline-variant flex items-center justify-center transition-colors">
+<svg class="w-3 h-3 text-on-primary-container opacity-0 pointer-events-none transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</label>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface line-through text-on-surface-variant">Vejiga de hidratación 3L (llena)</p>
+</div>
+<span class="font-technical-mono text-technical-mono text-secondary">3100g</span>
+</li>
+</div>
+</div>
+<!-- Subtle Technical Alert (Lichen Orange) -->
+<div class="xl:col-span-2 bg-tertiary/10 border border-tertiary-container/30 p-4 rounded flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">warning</span>
+<p class="font-body-md text-body-md text-on-tertiary-container">Alerta técnica: La ruta predice temperaturas de -8°C. Considera añadir el "Kit de Clima Extremo" si planeas rutas nocturnas.</p>
+</div>
+</div>
+</main>
+</div>
+</body></html>

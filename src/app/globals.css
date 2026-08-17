@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Las fuentes (DM Serif Display, DM Sans, JetBrains Mono y Material Symbols)
+   se cargan vía <link> en src/app/layout.tsx — los @import deben ir antes de
+   cualquier regla CSS, por eso aquí no se usan. */
+
+@layer base {
+  /* ── Tema OSCURO (por defecto) ─────────────────────────────── */
+  :root,
+  .dark {
+    --surface: 16 20 18;
+    --surface-dim: 16 20 18;
+    --surface-bright: 53 58 55;
+    --surface-container-lowest: 10 15 13;
+    --surface-container-low: 24 29 26;
+    --surface-container: 28 33 30;
+    --surface-container-high: 38 43 40;
+    --surface-container-highest: 49 54 51;
+    --on-surface: 223 228 222;
+    --on-surface-variant: 192 201 189;
+    --inverse-surface: 223 228 222;
+    --inverse-on-surface: 44 50 46;
+    --outline: 138 147 137;
+    --outline-variant: 64 73 64;
+    --surface-tint: 145 214 157;
+    --primary: 145 214 157;
+    --on-primary: 0 57 24;
+    --primary-container: 92 159 107;
+    --on-primary-container: 0 49 20;
+    --inverse-primary: 40 107 60;
+    --secondary: 141 211 201;
+    --on-secondary: 0 55 50;
+    --secondary-container: 0 88 80;
+    --on-secondary-container: 134 204 193;
+    --tertiary: 255 182 136;
+    --on-tertiary: 81 36 0;
+    --tertiary-container: 202 127 75;
+    --on-tertiary-container: 71 30 0;
+    --error: 255 180 171;
+    --on-error: 105 0 5;
+    --error-container: 147 0 10;
+    --on-error-container: 255 218 214;
+    --primary-fixed: 172 243 184;
+    --primary-fixed-dim: 145 214 157;
+    --on-primary-fixed: 0 33 11;
+    --on-primary-fixed-variant: 7 82 39;
+    --secondary-fixed: 169 240 229;
+    --secondary-fixed-dim: 141 211 201;
+    --on-secondary-fixed: 0 32 28;
+    --on-secondary-fixed-variant: 0 80 73;
+    --tertiary-fixed: 255 219 199;
+    --tertiary-fixed-dim: 255 182 136;
+    --on-tertiary-fixed: 49 19 0;
+    --on-tertiary-fixed-variant: 112 55 8;
+    --background: 16 20 18;
+    --on-background: 223 228 222;
+    --surface-variant: 49 54 51;
+    color-scheme: dark;
+  }
+
+  /* ── Tema CLARO (blanco cálido) ────────────────────────────── */
+  .light {
+    --surface: 245 240 232;
+    --surface-dim: 222 216 207;
+    --surface-bright: 255 252 245;
+    --surface-container-lowest: 255 255 255;
+    --surface-container-low: 243 237 228;
+    --surface-container: 237 231 222;
+    --surface-container-high: 231 225 216;
+    --surface-container-highest: 225 219 210;
+    --on-surface: 26 28 25;
+    --on-surface-variant: 67 72 63;
+    --inverse-surface: 46 49 45;
+    --inverse-on-surface: 239 241 234;
+    --outline: 115 121 109;
+    --outline-variant: 195 200 187;
+    --surface-tint: 44 107 63;
+    --primary: 44 107 63;
+    --on-primary: 255 255 255;
+    --primary-container: 177 241 188;
+    --on-primary-container: 0 33 16;
+    --inverse-primary: 145 214 157;
+    --secondary: 0 106 96;
+    --on-secondary: 255 255 255;
+    --secondary-container: 167 240 228;
+    --on-secondary-container: 0 32 28;
+    --tertiary: 140 79 31;
+    --on-tertiary: 255 255 255;
+    --tertiary-container: 255 219 199;
+    --on-tertiary-container: 46 21 0;
+    --error: 186 26 26;
+    --on-error: 255 255 255;
+    --error-container: 255 218 214;
+    --on-error-container: 65 0 2;
+    --background: 245 240 232;
+    --on-background: 26 28 25;
+    --surface-variant: 225 219 210;
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer components {
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+  .material-symbols-outlined.filled {
+    font-variation-settings: 'FILL' 1;
+  }
+
+  /* Topographic background texture used on hero cards / route thumbnails */
+  .bg-topo {
+    background-color: #181d1a;
+    background-image:
+      radial-gradient(circle at 50% 50%, transparent 0, transparent 38px, rgba(138, 147, 137, 0.08) 38px, rgba(138, 147, 137, 0.08) 39px, transparent 39px),
+      radial-gradient(circle at 50% 50%, transparent 0, transparent 58px, rgba(138, 147, 137, 0.07) 58px, rgba(138, 147, 137, 0.07) 59px, transparent 59px),
+      radial-gradient(circle at 50% 50%, transparent 0, transparent 80px, rgba(138, 147, 137, 0.06) 80px, rgba(138, 147, 137, 0.06) 81px, transparent 81px),
+      radial-gradient(circle at 50% 50%, transparent 0, transparent 104px, rgba(138, 147, 137, 0.05) 104px, rgba(138, 147, 137, 0.05) 105px, transparent 105px);
+    background-size: 240px 240px;
+  }
+  .topo-bg {
+    background-image:
+      linear-gradient(rgba(64, 73, 64, 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(64, 73, 64, 0.12) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-out both;
+  }
+
+  /* Slow pulse for AI Input */
+  @keyframes slowPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(145, 214, 157, 0.4); border-color: rgba(145, 214, 157, 0.5); }
+    50%  { box-shadow: 0 0 12px 4px rgba(145, 214, 157, 0.2); border-color: rgba(145, 214, 157, 1); }
+    100% { box-shadow: 0 0 0 0 rgba(145, 214, 157, 0.4); border-color: rgba(145, 214, 157, 0.5); }
+  }
+  .ai-pulse:focus-within {
+    animation: slowPulse 3s infinite ease-in-out;
+  }
+
+  /* Micro indicator pulse */
+  @keyframes microPulse {
+    0%   { transform: scale(0.95); opacity: 0.7; }
+    50%  { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+  }
+  .micro-indicator {
+    animation: microPulse 2s infinite ease-in-out;
+  }
+
+  /* AI typing indicator dots */
+  @keyframes typingBlink {
+    0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+    40%           { opacity: 1; transform: translateY(-2px); }
+  }
+  .typing-dot { animation: typingBlink 1.4s infinite ease-in-out; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+}

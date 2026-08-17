@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>hAIke - Planificador IA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=DM+Serif+Display:ital@0;1&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#075227",
+                        "secondary-fixed": "#a9f0e5",
+                        "inverse-surface": "#dfe4de",
+                        "surface-variant": "#313633",
+                        "on-tertiary-fixed": "#311300",
+                        "surface-tint": "#91d69d",
+                        "outline-variant": "#404940",
+                        "tertiary-container": "#ca7f4b",
+                        "primary": "#91d69d",
+                        "secondary-fixed-dim": "#8dd3c9",
+                        "surface-container-lowest": "#0a0f0d",
+                        "primary-fixed": "#acf3b8",
+                        "on-secondary": "#003732",
+                        "on-error": "#690005",
+                        "on-secondary-fixed": "#00201c",
+                        "on-primary-fixed": "#00210b",
+                        "on-primary-container": "#003114",
+                        "tertiary-fixed-dim": "#ffb688",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#101412",
+                        "surface-container": "#1c211e",
+                        "background": "#101412",
+                        "outline": "#8a9389",
+                        "on-primary": "#003918",
+                        "surface-bright": "#353a37",
+                        "inverse-on-surface": "#2c322e",
+                        "on-tertiary": "#512400",
+                        "on-secondary-container": "#86ccc1",
+                        "surface-container-highest": "#313633",
+                        "secondary": "#8dd3c9",
+                        "primary-fixed-dim": "#91d69d",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#ffdbc7",
+                        "tertiary": "#ffb688",
+                        "on-surface": "#dfe4de",
+                        "on-surface-variant": "#c0c9bd",
+                        "surface-container-high": "#262b28",
+                        "on-tertiary-container": "#471e00",
+                        "on-secondary-fixed-variant": "#005049",
+                        "surface": "#101412",
+                        "surface-container-low": "#181d1a",
+                        "secondary-container": "#005850",
+                        "on-tertiary-fixed-variant": "#703708",
+                        "on-background": "#dfe4de",
+                        "inverse-primary": "#286b3c",
+                        "primary-container": "#5c9f6b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "lg": "48px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "xl": "80px",
+                        "margin-desktop": "64px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["DM Sans"],
+                        "label-md": ["DM Sans"],
+                        "display-lg": ["DM Serif Display"],
+                        "technical-mono": ["DM Sans"],
+                        "title-lg": ["DM Sans"],
+                        "body-lg": ["DM Sans"],
+                        "headline-md": ["DM Serif Display"],
+                        "display-lg-mobile": ["DM Serif Display"],
+                        "headline-sm": ["DM Serif Display"],
+                        "headline-lg": ["DM Serif Display"],
+                        "headline-lg-mobile": ["DM Serif Display"],
+                        "title-md": ["DM Sans"],
+                        "mono-data": ["JetBrains Mono"],
+                        "label-caps": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "technical-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["36px", {"lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "700"}],
+                        "mono-data": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .topo-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,50 Q30,20 50,50 T90,50' fill='none' stroke='%23404940' stroke-width='1' opacity='0.2'/%3E%3Cpath d='M10,60 Q30,30 50,60 T90,60' fill='none' stroke='%23404940' stroke-width='1' opacity='0.1'/%3E%3C/svg%3E");
+            background-size: 50px 50px;
+        }
+        .ai-pulse {
+            animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(145, 214, 157, 1); box-shadow: 0 0 12px rgba(145, 214, 157, 0.2); }
+            50% { border-color: rgba(145, 214, 157, 0.4); box-shadow: 0 0 4px rgba(145, 214, 157, 0.05); }
+        }
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg min-h-screen flex overflow-hidden">
+<!-- SideNavBar (Hidden on Mobile, Visible on Desktop) -->
+<nav class="hidden md:flex flex-col h-screen fixed left-0 top-0 py-base docked left-0 h-full w-64 border-r border-outline-variant bg-surface z-50">
+<div class="px-6 py-4 flex flex-col mb-8">
+<span class="font-headline-lg text-headline-lg text-primary italic tracking-tight">hAIke</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase mt-1">Technical Organic Trekking</span>
+</div>
+<ul class="flex flex-col gap-2 px-4 flex-grow">
+<!-- Explore -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">explore</span>
+<span class="font-title-md text-title-md">Explore</span>
+</a>
+</li>
+<!-- My Routes -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">map</span>
+<span class="font-title-md text-title-md">My Routes</span>
+</a>
+</li>
+<!-- Planner (ACTIVE) -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-container-high transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+<span class="font-title-md text-title-md">Planner</span>
+</a>
+</li>
+<!-- Gear -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">handyman</span>
+<span class="font-title-md text-title-md">Gear</span>
+</a>
+</li>
+<!-- Weather -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">cloudy_snowing</span>
+<span class="font-title-md text-title-md">Weather</span>
+</a>
+</li>
+<!-- Community -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high hover:text-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">groups</span>
+<span class="font-title-md text-title-md">Community</span>
+</a>
+</li>
+</ul>
+<div class="px-6 py-4 mt-auto">
+<div class="flex items-center gap-3">
+<img alt="User Profile" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="Close up portrait of an experienced trekker with weathered skin and specialized outdoor gear, standing in a dim, misty forest environment. The lighting is low-key, emphasizing a rugged, professional organic aesthetic fitting for a technical hiking application profile picture. Deep green and earthy tones dominate." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUXL9DZzK76hR9R6dWC5e8L4_sAR-AV22oCkD2bhg3Kvu76QZrjk0gdnvXifBShWQZwuSX9zIVZvcDFjGBzNNQWTjc-SkaWCd2vLBmd38Yp-MTNKEmlBPCNODDetFaA-dGE_5JUUY0KNYcfuR9NHT8-ICXZ0Tx6SSZIGKrLh7PIQpIY2F6_hDIQMsxgi5NFQHo6BOqJoAWv3eLYF9ecwNNaoHV8z7BCSffS8CPphRm1o1Gqhc8WhSOuRP9iarSRE1ORYNTF7JvJZg"/>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface text-sm">Trekker 01</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant text-xs">Pro Member</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 md:ml-64 flex flex-col h-screen bg-surface-container-lowest relative">
+<!-- TopNavBar (Mobile Only for Nav, Desktop for Actions) -->
+<header class="flex justify-between items-center h-16 px-4 md:px-margin-desktop w-full border-b border-outline-variant bg-surface z-40 sticky top-0 md:hidden">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary italic tracking-tight">hAIke</span>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all scale-95 active:scale-90">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Chat Workspace -->
+<div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+<!-- Main Chat Area -->
+<section class="flex-1 flex flex-col h-full bg-surface-container-lowest relative">
+<!-- Chat History Scrollable Area -->
+<div class="flex-1 overflow-y-auto px-4 md:px-margin-desktop py-8 scrollbar-hide flex flex-col gap-8">
+<!-- User Message -->
+<div class="flex gap-4 justify-end">
+<div class="max-w-[80%] bg-surface-container-high border border-outline-variant rounded-2xl rounded-tr-sm p-4 text-on-surface">
+<p class="font-body-lg text-body-lg">Planifica un itinerario técnico de 3 días en el Valle de Arán. Nivel intermedio-alto. Prioriza rutas con acceso a puntos de agua y pernocta en refugios.</p>
+</div>
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover mt-1" data-alt="Close up portrait of an experienced trekker with weathered skin and specialized outdoor gear, standing in a dim, misty forest environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGej5zXFOW6I6KeNfCrN-zyfDi8yPVbJuVbgQy-swS26lKtwd1SKNQIqKQGjaf4yyyGvJM4Vbva7kJ00HJFz0bA5EcVA0f1g85igPiFt6FTQLk_Ms1d-mfGTRilSh_oKxrbSg0qM6egULSRAzyx1NWNyw_zmf_HavSQWGHqAv5tOn98Dc32O-8RRs7nX33qEZr6-0AXvtP_AXwj7g6oocRJbCqMq6-1lOe0IVUPYlaVmfA3cPhYqrQrSylcOhs8d7aGNMojT3e9LQ"/>
+</div>
+<!-- AI Response -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-sm">robot_2</span>
+</div>
+<div class="max-w-[85%] bg-surface-container-low border border-outline-variant rounded-2xl rounded-tl-sm p-6 text-on-surface shadow-sm topo-bg relative overflow-hidden">
+<h3 class="font-title-md text-title-md text-primary mb-4">Itinerario: 3 Días en el Valle de Arán</h3>
+<div class="space-y-4 font-body-lg text-body-lg text-on-surface-variant">
+<p>He diseñado una ruta exigente pero equilibrada que maximiza el contacto con lagos glaciares y minimiza la exposición prolongada en tramos sin agua.</p>
+<div class="border-l-2 border-primary pl-4 py-1 my-4 bg-surface-container p-3 rounded-r-lg">
+<h4 class="font-title-md text-title-md text-on-surface text-base mb-1">Día 1: Aproximación y Refugio Colomers</h4>
+<p class="text-sm font-mono-data text-mono-data mb-2 text-secondary">Dist: 12km | Desnivel: +850m | Tiempo est: 5.5h</p>
+<p class="text-sm">Inicio en Baños de Tredòs. Ascenso gradual por el valle de Aiguamòg. Tramos de pedrera en los últimos 2km antes de llegar al Circo de Colomers.</p>
+</div>
+<div class="border-l-2 border-outline pl-4 py-1 my-4 bg-surface-container p-3 rounded-r-lg opacity-80">
+<h4 class="font-title-md text-title-md text-on-surface text-base mb-1">Día 2: Travesía de los Lagos hacia Saboredo</h4>
+<p class="text-sm font-mono-data text-mono-data mb-2 text-secondary">Dist: 15km | Desnivel: +1100m | Tiempo est: 7.5h</p>
+<p class="text-sm">Jornada técnica cruzando el Port de Ratera. Multitud de puntos de agua (Lagos glaciares). Noche en Refugio de Saboredo.</p>
+</div>
+<p>La ruta consolidada ha sido generada y transferida al panel lateral para su revisión técnica y exportación topográfica.</p>
+</div>
+</div>
+</div>
+<!-- AI Typing Indicator -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center mt-1 flex-shrink-0 opacity-50">
+<span class="material-symbols-outlined text-on-primary-container text-sm">robot_2</span>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1 w-20">
+<div class="w-2 h-2 bg-primary rounded-full typing-dot"></div>
+<div class="w-2 h-2 bg-primary rounded-full typing-dot"></div>
+<div class="w-2 h-2 bg-primary rounded-full typing-dot"></div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-4 md:px-margin-desktop md:pb-8 bg-surface-container-lowest">
+<div class="relative bg-surface-container border border-primary ai-pulse rounded-xl shadow-lg transition-all">
+<textarea class="w-full bg-transparent border-none text-on-surface font-body-lg text-body-lg px-4 py-4 pr-16 focus:ring-0 resize-none placeholder-on-surface-variant overflow-hidden" id="chat-input" placeholder="Modifica el itinerario, añade restricciones..." rows="1"></textarea>
+<div class="absolute right-2 bottom-2">
+<button class="bg-primary hover:bg-primary-fixed text-on-primary rounded-lg w-10 h-10 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<div class="absolute top-[-24px] left-4 flex items-center gap-2">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="font-label-caps text-label-caps text-primary uppercase">Analizando topografía...</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Itinerary Dashboard (Bento Style) -->
+<aside class="w-full lg:w-96 bg-surface border-l border-outline-variant flex flex-col h-[512px] lg:h-full z-10 shrink-0">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<h2 class="font-title-md text-title-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">map</span>
+                    Itinerario Activo
+                </h2>
+<span class="bg-surface-container-high px-2 py-1 rounded text-xs font-mono-data text-secondary border border-outline-variant">3 DÍAS</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4 bg-surface">
+<!-- Day 1 Card -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-primary text-base transition-colors">Día 1: Refugio Colomers</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+</div>
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-0.5 bg-primary-container text-on-primary-container rounded-full text-xs font-mono-data border border-on-primary-fixed-variant">MODERADO</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-sm text-on-surface-variant font-mono-data">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">hiking</span> 12km
+                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +850m
+                        </div>
+</div>
+</div>
+<!-- Day 2 Card -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-on-surface text-base group-hover:text-primary transition-colors">Día 2: Lagos de Saboredo</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+</div>
+<div class="flex gap-2 mb-3">
+<span class="px-2 py-0.5 bg-error-container text-error rounded-full text-xs font-mono-data border border-on-error">ALTO</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-sm text-on-surface-variant font-mono-data">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">hiking</span> 15km
+                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +1100m
+                        </div>
+</div>
+</div>
+<!-- Water Points Info Card -->
+<div class="bg-surface-container-highest/50 backdrop-blur-sm border border-outline-variant rounded-xl p-4 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary">water_drop</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-sm text-on-surface">Puntos de agua</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">4 fuentes naturales confirmadas en ruta.</p>
+</div>
+</div>
+</div>
+<!-- Action Buttons Footer -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest space-y-3">
+<button class="w-full bg-primary hover:bg-primary-fixed text-on-primary font-title-md text-title-md text-sm py-3 rounded-lg flex justify-center items-center gap-2 transition-all shadow-[0_0_12px_rgba(145,214,157,0.2)] hover:shadow-[0_0_16px_rgba(145,214,157,0.3)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">backpack</span>
+                    Generar lista de equipaje
+                </button>
+<button class="w-full bg-transparent border border-outline hover:border-primary text-on-surface hover:text-primary font-title-md text-title-md text-sm py-3 rounded-lg flex justify-center items-center gap-2 transition-colors">
+<span class="material-symbols-outlined">map</span>
+                    Ver en mapa
+                </button>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full bg-surface-container-lowest border-t border-outline-variant z-50 px-2 py-3 flex justify-around items-center">
+<!-- Explore -->
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors p-2" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 0;">explore</span>
+<span class="font-label-caps text-label-caps text-[10px]">Explore</span>
+</a>
+<!-- My Routes -->
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors p-2" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 0;">map</span>
+<span class="font-label-caps text-label-caps text-[10px]">Routes</span>
+</a>
+<!-- Planner (ACTIVE) -->
+<a class="flex flex-col items-center gap-1 text-primary p-2" href="#">
+<div class="bg-surface-container-high px-4 py-1 rounded-full">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+</div>
+<span class="font-label-caps text-label-caps text-[10px] font-bold">Planner</span>
+</a>
+<!-- Gear -->
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors p-2" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 0;">handyman</span>
+<span class="font-label-caps text-label-caps text-[10px]">Gear</span>
+</a>
+</nav>
+<script>
+    // Simple auto-resize for textarea
+    const textarea = document.getElementById('chat-input');
+    if(textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+            // Max height limit
+            if (this.scrollHeight > 150) {
+                this.style.overflowY = 'auto';
+                this.style.height = '150px';
+            } else {
+                this.style.overflowY = 'hidden';
+            }
+        });
+    }
+</script>
+</body></html>

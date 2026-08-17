@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>hAIke | Central de Clima Técnico</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=DM+Serif+Display&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .topo-bg {
+            background-image: url('https://lh3.googleusercontent.com/aida/ADBb0ujgnlJHX_nwLrLxWzCzaGI_WeRklR1iVKorPMt2dqBU4Oxqh1ARH9RGeCedGautrzuZjNZUekJISi1FJMamO27qp06zUu1bTWvUdlLj2bd9I4YzcqgrmYMlmn7rY8fQVfjDvogYoMCchf2p6X4D5vg8RSzMp81J5nSFvdXTfAxY3na481HvnCFrkTmM3nPO1Gp0bLiGqzvHDKUy1YJh7dxYoPnMgon7yC-id10l2G5Kz0sKPuZTz6YWZzo');
+            background-size: 600px;
+            background-repeat: repeat;
+            opacity: 0.05;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(28, 33, 30, 0.8);
+        }
+        .technical-grid {
+            background-image: radial-gradient(circle, #404940 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#a9f0e5",
+                      "on-surface-variant": "#c0c9bd",
+                      "primary": "#91d69d",
+                      "on-secondary-fixed-variant": "#005049",
+                      "surface-variant": "#313633",
+                      "secondary-container": "#005850",
+                      "on-secondary-fixed": "#00201c",
+                      "on-secondary": "#003732",
+                      "surface-container-highest": "#313633",
+                      "secondary": "#8dd3c9",
+                      "surface-container-low": "#181d1a",
+                      "primary-container": "#5c9f6b",
+                      "surface-tint": "#91d69d",
+                      "on-background": "#dfe4de",
+                      "on-tertiary-fixed": "#311300",
+                      "on-secondary-container": "#86ccc1",
+                      "outline-variant": "#404940",
+                      "surface-container": "#1c211e",
+                      "on-surface": "#dfe4de",
+                      "inverse-primary": "#286b3c",
+                      "inverse-on-surface": "#2c322e",
+                      "on-primary": "#003918",
+                      "on-error-container": "#ffdad6",
+                      "error-container": "#93000a",
+                      "tertiary": "#ffb688",
+                      "on-primary-fixed-variant": "#075227",
+                      "on-error": "#690005",
+                      "tertiary-container": "#ca7f4b",
+                      "on-tertiary-container": "#471e00",
+                      "on-primary-container": "#003114",
+                      "background": "#101412",
+                      "surface-dim": "#101412",
+                      "surface-container-high": "#262b28",
+                      "surface": "#101412",
+                      "secondary-fixed-dim": "#8dd3c9",
+                      "tertiary-fixed-dim": "#ffb688",
+                      "on-tertiary": "#512400",
+                      "primary-fixed": "#acf3b8",
+                      "error": "#ffb4ab",
+                      "primary-fixed-dim": "#91d69d",
+                      "outline": "#8a9389",
+                      "on-primary-fixed": "#00210b",
+                      "surface-bright": "#353a37",
+                      "tertiary-fixed": "#ffdbc7",
+                      "on-tertiary-fixed-variant": "#703708",
+                      "inverse-surface": "#dfe4de",
+                      "surface-container-lowest": "#0a0f0d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "md": "24px",
+                      "margin-desktop": "64px",
+                      "lg": "48px",
+                      "xs": "4px",
+                      "sm": "12px",
+                      "xl": "80px",
+                      "margin-mobile": "20px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "body-md": ["DM Sans"],
+                      "display-lg": ["DM Serif Display"],
+                      "body-lg": ["DM Sans"],
+                      "title-lg": ["DM Sans"],
+                      "headline-md": ["DM Serif Display"],
+                      "headline-sm": ["DM Serif Display"],
+                      "label-md": ["DM Sans"],
+                      "technical-mono": ["DM Sans"],
+                      "display-lg-mobile": ["DM Serif Display"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                      "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "technical-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "display-lg-mobile": ["36px", {"lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop py-base">
+<div class="flex items-center gap-md">
+<h1 class="font-display-lg text-display-lg text-primary tracking-tighter">hAIke</h1>
+<div class="hidden md:flex items-center bg-surface-container px-md py-xs rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md text-on-surface w-64" placeholder="Buscar expedición..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">settings</span>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img alt="Avatar del usuario" class="w-full h-full object-cover" data-alt="A close-up portrait of a rugged mountain explorer wearing technical outdoor gear. The lighting is dramatic and cool-toned, reflecting a high-altitude alpine environment. The background is a soft-focus mountain peak under a slate-grey sky. The image has a professional, high-end photography aesthetic consistent with a technical hiking brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl1W3n4xpl7wbTev_17XwhIWxQBIRnnzXK4-msUkPHuGbIhPo9umJsPZuCnk43D37mbUiWAQGRxTtm3JDSbSvjyntKjG-aLiRNh2129Eatw16mWXuk4dnfFLT3Z8ss_cnEMhsHRUHCbbMiX0mPRDUccJMQpvpSuP8SQ1_tqoWfyOd8AU_C4866HBCAuriL-KQ7wRQD-oHtO-wseZxykW0N18taKMNNAqtwiL5am0VT6AP7Hm3gXmuuHrWF4DA8pOqAqfIpYJx_asI"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-container border-r border-outline-variant hidden md:flex flex-col py-lg z-40 pt-24">
+<div class="px-md mb-lg">
+<div class="flex items-center gap-base mb-xs">
+<span class="material-symbols-outlined text-primary">hiking</span>
+<span class="font-headline-sm text-headline-sm text-primary">hAIke Navigator</span>
+</div>
+<p class="font-technical-mono text-technical-mono text-on-surface-variant uppercase">Altitud: 2,450m</p>
+</div>
+<nav class="flex-1 px-sm space-y-xs">
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg font-technical-mono uppercase transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span> Explorar
+            </a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg font-technical-mono uppercase transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="terrain">terrain</span> Mis Rutas
+            </a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg font-technical-mono uppercase transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span> Planificador
+            </a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg font-technical-mono uppercase transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="backpack">backpack</span> Equipamiento
+            </a>
+<a class="bg-secondary-container text-on-secondary-container flex items-center gap-base px-md py-sm rounded-lg font-technical-mono uppercase scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="cloudy_snowing">cloudy_snowing</span> Clima
+            </a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg font-technical-mono uppercase transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span> Comunidad
+            </a>
+</nav>
+<div class="px-md mt-auto pt-lg border-t border-outline-variant space-y-xs">
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg font-technical-mono uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Ajustes
+            </a>
+<a class="text-on-surface-variant flex items-center gap-base px-md py-sm hover:bg-surface-variant rounded-lg font-technical-mono uppercase" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span> Cerrar Sesión
+            </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 pt-24 min-h-screen relative overflow-hidden">
+<div class="topo-bg absolute inset-0 pointer-events-none"></div>
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-lg space-y-lg relative z-10">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-md">
+<div>
+<p class="font-technical-mono text-technical-mono text-primary uppercase tracking-widest mb-xs">Localización: Pirineos Araneses</p>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Pico de Aneto</h2>
+<p class="font-body-md text-on-surface-variant">3,404m • Lat: 42.63°N Lon: 0.65°E</p>
+</div>
+<div class="bg-surface-container-high px-md py-sm rounded border border-outline-variant flex items-center gap-md">
+<div class="flex flex-col items-center">
+<span class="font-technical-mono text-technical-mono text-on-surface-variant">ACTUALIZADO</span>
+<span class="font-technical-mono text-technical-mono text-primary">HACE 2 MIN</span>
+</div>
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg font-bold flex items-center gap-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">sync</span> Recargar
+                    </button>
+</div>
+</header>
+<!-- IA Safety Alerts -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="bg-primary-container/20 border border-primary/30 p-md rounded-lg flex gap-md items-start">
+<span class="material-symbols-outlined text-primary text-[32px]">verified</span>
+<div>
+<h4 class="font-title-lg text-title-lg text-primary mb-xs">Ventana de buen tiempo</h4>
+<p class="font-body-md text-on-background">Se detecta una ventana óptima de ascenso para el sábado entre las 04:00 y las 14:00. Vientos estables por debajo de 20km/h.</p>
+</div>
+</div>
+<div class="bg-error-container/20 border border-error/30 p-md rounded-lg flex gap-md items-start">
+<span class="material-symbols-outlined text-error text-[32px]">warning</span>
+<div>
+<h4 class="font-title-lg text-title-lg text-error mb-xs">Alerta de Ventisca</h4>
+<p class="font-body-md text-on-background">Probabilidad alta de ventisca en cotas superiores a 2000m a partir de las 20:00 hoy. Riesgo de desorientación extremo.</p>
+</div>
+</div>
+</section>
+<!-- Main Dashboard Layout (Bento Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md">
+<!-- Current Conditions (Wide Card) -->
+<article class="md:col-span-8 glass-panel border border-outline-variant p-lg rounded-xl flex flex-col justify-between min-h-[400px] technical-grid">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-technical-mono text-technical-mono text-on-surface-variant uppercase">Condiciones Actuales</span>
+<div class="flex items-center gap-md mt-sm">
+<span class="font-display-lg text-[80px] leading-none text-on-surface">-4°C</span>
+<div class="flex flex-col">
+<span class="material-symbols-outlined text-primary text-[48px]" style="font-variation-settings: 'FILL' 1;">ac_unit</span>
+<span class="font-title-lg text-title-lg text-primary">Nieve Ligera</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-md text-on-surface-variant italic">"Sensación Térmica de -12°C"</p>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md mt-lg border-t border-outline-variant pt-lg">
+<div class="flex flex-col">
+<span class="font-technical-mono text-technical-mono text-on-surface-variant uppercase mb-xs">Viento</span>
+<div class="flex items-end gap-xs">
+<span class="font-headline-sm text-on-surface">32</span>
+<span class="font-label-md text-on-surface-variant">km/h NW</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-technical-mono text-technical-mono text-on-surface-variant uppercase mb-xs">Visibilidad</span>
+<div class="flex items-end gap-xs">
+<span class="font-headline-sm text-on-surface">1.2</span>
+<span class="font-label-md text-on-surface-variant">km</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-technical-mono text-technical-mono text-on-surface-variant uppercase mb-xs">Humedad</span>
+<div class="flex items-end gap-xs">
+<span class="font-headline-sm text-on-surface">88</span>
+<span class="font-label-md text-on-surface-variant">%</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-technical-mono text-technical-mono text-on-surface-variant uppercase mb-xs">Presión</span>
+<div class="flex items-end gap-xs">
+<span class="font-headline-sm text-on-surface">1012</span>
+<span class="font-label-md text-on-surface-variant">hPa</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Terrain Conditions (Side Card) -->
+<article class="md:col-span-4 bg-surface-container border border-outline-variant p-lg rounded-xl flex flex-col gap-lg">
+<div class="border-l-4 border-tertiary pl-md">
+<span class="font-technical-mono text-technical-mono text-tertiary uppercase mb-xs">Riesgo de Aludes</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">NIVEL 3 (NOTABLE)</h4>
+<p class="font-body-md text-on-surface-variant mt-xs">Capas de nieve inestable en caras Norte y Noroeste.</p>
+</div>
+<div class="space-y-md">
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<span class="font-body-md text-on-surface">Estado Nieve</span>
+<span class="font-technical-mono text-primary">POLVO / COSTRA</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<span class="font-body-md text-on-surface">Espesor</span>
+<span class="font-technical-mono text-on-surface">120 cm</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<span class="font-body-md text-on-surface">Humedad Suelo</span>
+<span class="font-technical-mono text-on-surface">BAJA (CONGELADO)</span>
+</div>
+</div>
+<div class="mt-auto bg-surface-variant p-md rounded border border-outline-variant">
+<p class="font-technical-mono text-on-surface-variant text-[10px] leading-tight">SENSOR DATA STREAM [ID: PYR-3404-01]: TRANSMITIENDO VÍA SATÉLITE. CALIBRACIÓN OK.</p>
+</div>
+</article>
+<!-- Radar Map (Bottom Left) -->
+<article class="md:col-span-7 bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden min-h-[450px] relative group">
+<div class="absolute top-md left-md z-20 pointer-events-none">
+<div class="bg-background/80 backdrop-blur px-md py-sm rounded border border-outline-variant">
+<h4 class="font-technical-mono text-technical-mono text-primary uppercase">Radar de Tormentas y Nieve</h4>
+<p class="text-[10px] text-on-surface-variant">CAPA: PRECIPITACIÓN ACUMULADA (2H)</p>
+</div>
+</div>
+<div class="w-full h-full bg-surface-dim flex items-center justify-center relative">
+<img alt="Topographic Radar Map" class="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" data-alt="A sophisticated digital topographic radar map of a rugged mountain range, featuring glowing teal contour lines and translucent purple overlays representing storm clouds. The visual style is high-tech and minimalist, mimicking a professional meteorological workstation with data overlays and coordinate grids. Dark, moody green and slate grey tones dominate the palette." data-location="Aneto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6cFL4XW0jwpQ7x7U9TEW2ER3OmlyHp2oCcdJ6S-p2eBfpEVtGGmVSMF7QlJdI236QNgYYltU-mroVh1_EC7XHG2dIYoQ0uLMv4VhYWlhsb1K8P92ybgU0ViXvN4Pght0JUrT8DMDT2YL3RW-QxPZZD_w99pMcP7PtMG7PoUr5gqKRXHyOsTwaJ7uzIG-dUzu9uqHjWcpMMNw0ahvl8_n97-vXwl_W2n4rKBjF-FRR4FS4ZL-mS95WfzSVF_PZgxtWHbCq5ZxbpW4"/>
+<!-- Simulated Radar Sweep -->
+<div class="absolute inset-0 border-r-2 border-primary/20 animate-[pulse_4s_infinite] pointer-events-none bg-gradient-to-r from-transparent to-primary/5"></div>
+<!-- Radar Icons -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="relative w-4 h-4 bg-primary rounded-full animate-ping opacity-75"></div>
+<div class="absolute inset-0 w-4 h-4 bg-primary rounded-full"></div>
+</div>
+</div>
+<div class="absolute bottom-md left-md right-md flex justify-between items-center">
+<div class="flex gap-sm">
+<button class="w-10 h-10 bg-surface-container rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-10 h-10 bg-surface-container rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<div class="bg-surface-container-high px-md py-xs rounded border border-outline-variant flex items-center gap-md">
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 bg-secondary rounded-full"></div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant">LLUVIA</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 bg-primary-container rounded-full"></div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant">NIEVE</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Hourly Forecast (Bottom Right) -->
+<article class="md:col-span-5 bg-surface-container border border-outline-variant p-lg rounded-xl overflow-hidden">
+<h4 class="font-technical-mono text-technical-mono text-on-surface-variant uppercase mb-lg">Pronóstico por Horas</h4>
+<div class="flex flex-col gap-sm">
+<!-- Hour Item -->
+<div class="flex items-center justify-between py-sm border-b border-outline-variant group hover:bg-surface-variant px-sm transition-colors rounded">
+<span class="font-technical-mono text-on-surface w-12">14:00</span>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="cloudy_snowing">cloudy_snowing</span>
+<span class="font-body-md text-on-surface-variant">-5°</span>
+</div>
+<div class="flex items-center gap-xs w-24">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container">umbrella</span>
+<div class="flex-1 bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full" style="width: 80%;"></div>
+</div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant">80%</span>
+</div>
+</div>
+<!-- Hour Item -->
+<div class="flex items-center justify-between py-sm border-b border-outline-variant group hover:bg-surface-variant px-sm transition-colors rounded">
+<span class="font-technical-mono text-on-surface w-12">16:00</span>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="cloud">cloud</span>
+<span class="font-body-md text-on-surface-variant">-6°</span>
+</div>
+<div class="flex items-center gap-xs w-24">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container">umbrella</span>
+<div class="flex-1 bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full" style="width: 45%;"></div>
+</div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant">45%</span>
+</div>
+</div>
+<!-- Hour Item -->
+<div class="flex items-center justify-between py-sm border-b border-outline-variant group hover:bg-surface-variant px-sm transition-colors rounded">
+<span class="font-technical-mono text-on-surface w-12">18:00</span>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="ac_unit" style="font-variation-settings: 'FILL' 1;">ac_unit</span>
+<span class="font-body-md text-on-surface-variant">-8°</span>
+</div>
+<div class="flex items-center gap-xs w-24">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container">umbrella</span>
+<div class="flex-1 bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full" style="width: 95%;"></div>
+</div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant">95%</span>
+</div>
+</div>
+<!-- Hour Item -->
+<div class="flex items-center justify-between py-sm border-b border-outline-variant group hover:bg-surface-variant px-sm transition-colors rounded">
+<span class="font-technical-mono text-on-surface w-12">20:00</span>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-error" data-icon="air">air</span>
+<span class="font-body-md text-on-surface-variant">-11°</span>
+</div>
+<div class="flex items-center gap-xs w-24">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container">umbrella</span>
+<div class="flex-1 bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full" style="width: 20%;"></div>
+</div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant">20%</span>
+</div>
+</div>
+<!-- Hour Item -->
+<div class="flex items-center justify-between py-sm group hover:bg-surface-variant px-sm transition-colors rounded">
+<span class="font-technical-mono text-on-surface w-12">22:00</span>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="bedtime">bedtime</span>
+<span class="font-body-md text-on-surface-variant">-14°</span>
+</div>
+<div class="flex items-center gap-xs w-24">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container">umbrella</span>
+<div class="flex-1 bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full" style="width: 5%;"></div>
+</div>
+<span class="font-technical-mono text-[10px] text-on-surface-variant">5%</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-lg py-md border border-primary/20 text-primary font-technical-mono uppercase hover:bg-primary/10 transition-colors rounded">
+                        Ver Pronóstico 7 Días
+                    </button>
+</article>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="md:ml-64 w-full px-margin-desktop py-lg flex flex-col md:flex-row justify-between items-center gap-md bg-background border-t border-outline-variant mt-xl relative z-10">
+<div class="flex flex-col items-start gap-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">hAIke</span>
+<p class="font-technical-mono text-technical-mono text-on-surface-variant">© 2024 hAIke Technical Expeditions. Diseñado para la altitud.</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-technical-mono text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Privacidad</a>
+<a class="font-technical-mono text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Términos de Servicio</a>
+<a class="font-technical-mono text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">API Técnica</a>
+<a class="font-technical-mono text-primary flex items-center gap-xs" href="#">
+<div class="w-2 h-2 bg-primary rounded-full"></div> Estado del Sistema
+            </a>
+</div>
+</footer>
+<script>
+        // Micro-interaction for atmospheric feeling
+        document.addEventListener('mousemove', (e) => {
+            const topo = document.querySelector('.topo-bg');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            topo.style.backgroundPosition = `${x * 20}px ${y * 20}px`;
+        });
+
+        // Simulating live data update every 10 seconds
+        setInterval(() => {
+            console.log('Syncing technical meteorological data stream...');
+            const syncBtn = document.querySelector('button span.material-symbols-outlined');
+            if (syncBtn) {
+                syncBtn.classList.add('animate-spin');
+                setTimeout(() => syncBtn.classList.remove('animate-spin'), 1000);
+            }
+        }, 10000);
+    </script>
+</body></html>

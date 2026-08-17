@@ -1,0 +1,45 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# env — nunca subir claves reales (GEMINI_API_KEY, tokens, etc.)
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# proyecto: duplicado sin usar (el real está en public/haikevideo.mp4)
+/haikevideo.mp4
+
+# proyecto: zip redundante (ya extraído en stitch_haike_trekking_interface/)
+/stich.zip
+
+# proyecto: clon vacío del repo remoto (solo tenía el README inicial de GitHub).
+# Ya no hace falta — el remote "origin" del repo raíz apunta al mismo lugar.
+# Puedes borrar esta carpeta cuando quieras: rm -rf hAIke
+/hAIke/

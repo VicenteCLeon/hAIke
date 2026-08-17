@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>hAIke - Glacier National Park Highline Trail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=DM+Serif+Display:ital@0;1&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#075227",
+                        "secondary-fixed": "#a9f0e5",
+                        "inverse-surface": "#dfe4de",
+                        "surface-variant": "#313633",
+                        "on-tertiary-fixed": "#311300",
+                        "surface-tint": "#91d69d",
+                        "outline-variant": "#404940",
+                        "tertiary-container": "#ca7f4b",
+                        "primary": "#91d69d",
+                        "secondary-fixed-dim": "#8dd3c9",
+                        "surface-container-lowest": "#0a0f0d",
+                        "primary-fixed": "#acf3b8",
+                        "on-secondary": "#003732",
+                        "on-error": "#690005",
+                        "on-secondary-fixed": "#00201c",
+                        "on-primary-fixed": "#00210b",
+                        "on-primary-container": "#003114",
+                        "tertiary-fixed-dim": "#ffb688",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#101412",
+                        "surface-container": "#1c211e",
+                        "background": "#101412",
+                        "outline": "#8a9389",
+                        "on-primary": "#003918",
+                        "surface-bright": "#353a37",
+                        "inverse-on-surface": "#2c322e",
+                        "on-tertiary": "#512400",
+                        "on-secondary-container": "#86ccc1",
+                        "surface-container-highest": "#313633",
+                        "secondary": "#8dd3c9",
+                        "primary-fixed-dim": "#91d69d",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#ffdbc7",
+                        "tertiary": "#ffb688",
+                        "on-surface": "#dfe4de",
+                        "on-surface-variant": "#c0c9bd",
+                        "surface-container-high": "#262b28",
+                        "on-tertiary-container": "#471e00",
+                        "on-secondary-fixed-variant": "#005049",
+                        "surface": "#101412",
+                        "surface-container-low": "#181d1a",
+                        "secondary-container": "#005850",
+                        "on-tertiary-fixed-variant": "#703708",
+                        "on-background": "#dfe4de",
+                        "inverse-primary": "#286b3c",
+                        "primary-container": "#5c9f6b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "lg": "48px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "xl": "80px",
+                        "margin-desktop": "64px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["DM Sans"],
+                        "label-md": ["DM Sans"],
+                        "display-lg": ["DM Serif Display"],
+                        "technical-mono": ["DM Sans"],
+                        "title-lg": ["DM Sans"],
+                        "body-lg": ["DM Sans"],
+                        "headline-md": ["DM Serif Display"],
+                        "display-lg-mobile": ["DM Serif Display"],
+                        "headline-sm": ["DM Serif Display"],
+                        "mono-data": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "technical-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "display-lg-mobile": ["36px", { "lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "mono-data": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .ai-pulse {
+            animation: pulse-border 2s infinite ease-in-out;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(145, 214, 157, 0.4); box-shadow: 0 0 0 rgba(92, 159, 107, 0); }
+            50% { border-color: rgba(145, 214, 157, 1); box-shadow: 0 0 12px rgba(92, 159, 107, 0.2); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg antialiased overflow-x-hidden min-h-screen">
+<!-- TopNavBar -->
+<nav class="hidden md:flex justify-between items-center h-16 px-margin-desktop w-full border-b border-outline-variant bg-surface sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary italic">hAIke</span>
+</div>
+<div class="flex gap-8">
+<a class="font-title-lg text-title-lg text-on-surface-variant hover:text-primary transition-all scale-95 active:scale-90" href="#">Explore</a>
+<a class="font-title-lg text-title-lg text-on-surface-variant hover:text-primary transition-all scale-95 active:scale-90" href="#">My Routes</a>
+<a class="font-title-lg text-title-lg text-on-surface-variant hover:text-primary transition-all scale-95 active:scale-90" href="#">Planner</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">search</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">settings</span>
+<img alt="Trekker Profile" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCE8PMKyDWPB9NFHMA0vC8xSo152V13XWqVneTA2th_iz4tsrdCAYPLRQRUjM0iCqmg53tYLvGBmvCO4XVs87WgRSMiNMmIfrDm5UkELOCruINut3sAV6-HgZjJPjq_rW2jozci5yJ27m-EZdKEppG-FQs4yRsyQlkau7-fo_U24onI43_s4UNfA2AEheev4EJzaXrFAstGIDPqFRzhEnKm-VmrC1owWnkghCLKbYSo9HG4vnPTJPcWfvl81KbJ_VcowHYQido-Rk"/>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="w-full">
+<!-- Hero Section -->
+<header class="relative w-full h-[614px] md:h-[716px] flex items-end pb-12 px-margin-mobile md:px-margin-desktop">
+<img alt="Glacier National Park" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOvRTUH-_xPRxucf6MmglnkB0C-O_0so8Dw6Eck5EWkG2OUBXEKJhGEGjg_KiEvI4xJ4B9eTYq3rerxniDFw2hjpmz9gLr4wRajDEjrAyboBVwEqDoe9U01Q5QZZPaBcgpfPoA5K--FKGFy1XcdRF2u1-8GX1TcADkhLYMjfvlNCI6K6Trs9UFXkEFs5fF7_4xJf7w17uW6rw7QC0hUiJ3pVR1o-CCEXd27jsx8frz6E_Qx6J2ZEk3txO5eKq86UFx-mBrM3iDsXE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+<div class="relative z-10 w-full max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-end gap-8">
+<div>
+<span class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-2 block">Montana, USA</span>
+<h1 class="font-display-lg text-display-lg text-primary mb-4">Glacier National Park<br/>Highline Trail</h1>
+<div class="flex gap-4 items-center">
+<span class="bg-surface-container-high border border-outline-variant px-3 py-1 rounded-full font-mono-data text-mono-data text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">hiking</span> 18km
+                        </span>
+<span class="bg-surface-container-high border border-outline-variant px-3 py-1 rounded-full font-mono-data text-mono-data text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">landscape</span> +800m
+                        </span>
+<span class="bg-secondary-container/30 border border-secondary text-secondary px-3 py-1 rounded-full font-label-md text-label-md uppercase">
+                            Moderate
+                        </span>
+</div>
+</div>
+<!-- Animated Elevation Chart Widget -->
+<div class="w-full md:w-1/3 h-32 relative bg-surface-container-low border border-outline-variant rounded-lg p-4">
+<div class="absolute top-2 left-3 font-label-md text-label-md text-on-surface-variant">Elevation Profile</div>
+<svg class="w-full h-full mt-4" preserveaspectratio="none" viewbox="0 0 100 40">
+<defs>
+<lineargradient id="elevGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#91d69d" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#91d69d" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,40 L0,30 Q10,25 20,28 T40,15 T60,20 T80,5 L100,10 L100,40 Z" fill="url(#elevGrad)"></path>
+<path class="drop-shadow-[0_0_4px_rgba(145,214,157,0.5)]" d="M0,30 Q10,25 20,28 T40,15 T60,20 T80,5 L100,10" fill="none" stroke="#91d69d" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+</header>
+<!-- Two Column Layout -->
+<div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12 flex flex-col lg:flex-row gap-gutter">
+<!-- Left Canvas: Content -->
+<div class="w-full lg:w-2/3 flex flex-col gap-12">
+<!-- Navigation Tabs -->
+<div class="flex gap-8 border-b border-outline-variant overflow-x-auto pb-2">
+<button class="font-title-lg text-title-lg text-primary border-b-2 border-primary pb-2 whitespace-nowrap">Overview</button>
+<button class="font-title-lg text-title-lg text-on-surface-variant hover:text-primary transition-colors pb-2 whitespace-nowrap">Itinerary</button>
+<button class="font-title-lg text-title-lg text-on-surface-variant hover:text-primary transition-colors pb-2 whitespace-nowrap">Gear List</button>
+<button class="font-title-lg text-title-lg text-on-surface-variant hover:text-primary transition-colors pb-2 whitespace-nowrap">Reviews</button>
+</div>
+<!-- Section: Overview -->
+<section>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                        The Highline Trail is an iconic route tracing the Continental Divide. Offering sweeping views of alpine valleys and jagged peaks, this trail requires a steady pace and reliable gear. The path is carved into the "Garden Wall" and provides consistent exposure, demanding both physical endurance and psychological resilience. 
+                    </p>
+</section>
+<!-- Section: AI Synthesis Reviews -->
+<section class="bg-surface-container-high border border-outline-variant rounded-xl p-6 relative overflow-hidden ai-pulse">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary">psychology</span>
+<h3 class="font-title-lg text-title-lg text-primary">hAIke Synthesis</h3>
+<span class="bg-surface-container-highest px-2 py-0.5 rounded font-mono-data text-[11px] text-on-surface-variant">47 Reviews Analyzed</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface italic border-l-2 border-primary pl-4">
+                        "Spectacular views throughout the route. Multiple reports of bear activity near the halfway point—carrying bear spray is essential. Water sources are scarce in the middle section, so pack accordingly."
+                    </p>
+</section>
+<!-- Section: Terrain Data Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-6 flex flex-col gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">water_drop</span>
+<div class="font-label-md text-label-md text-on-surface-variant">Water Availability</div>
+<div class="font-title-lg text-title-lg text-on-surface">Scarce (Mid-trail)</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-6 flex flex-col gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">thermostat</span>
+<div class="font-label-md text-label-md text-on-surface-variant">Avg Temp</div>
+<div class="font-title-lg text-title-lg text-on-surface">12°C - 24°C</div>
+</div>
+</section>
+</div>
+<!-- Right Sidebar: Sticky Planner -->
+<aside class="w-full lg:w-1/3">
+<div class="sticky top-24 bg-surface-container-low border border-outline-variant rounded-xl p-6 flex flex-col gap-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+<h3 class="font-title-lg text-title-lg text-on-surface">Route Logistics</h3>
+<ul class="flex flex-col gap-4 border-t border-outline-variant pt-4">
+<li class="flex justify-between items-center pb-2 border-b border-outline-variant/30">
+<span class="font-body-md text-body-md text-on-surface-variant">Distance</span>
+<span class="font-mono-data text-mono-data text-on-surface">18.2 km</span>
+</li>
+<li class="flex justify-between items-center pb-2 border-b border-outline-variant/30">
+<span class="font-body-md text-body-md text-on-surface-variant">Elevation Gain</span>
+<span class="font-mono-data text-mono-data text-on-surface">+815 m</span>
+</li>
+<li class="flex justify-between items-center pb-2 border-b border-outline-variant/30">
+<span class="font-body-md text-body-md text-on-surface-variant">Est. Time</span>
+<span class="font-mono-data text-mono-data text-on-surface">6-8 hrs</span>
+</li>
+</ul>
+<button class="w-full bg-primary hover:bg-primary-fixed text-on-primary font-title-lg text-title-lg py-4 rounded-lg flex items-center justify-center gap-2 transition-colors hover:shadow-[0_0_16px_rgba(145,214,157,0.3)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+                        Plan this Route
+                    </button>
+<button class="w-full bg-transparent border border-outline-variant hover:bg-surface-container-high text-on-surface font-title-lg text-title-lg py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined">download</span>
+                        Download GPX
+                    </button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant py-6 px-margin-desktop w-full mt-12">
+<div class="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="font-label-md text-label-md text-on-surface-variant">© 2024 hAIke Technical Outdoor Systems</span>
+<div class="flex gap-6">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">API</a>
+</div>
+</div>
+</footer>
+</body></html>
