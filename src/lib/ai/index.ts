@@ -1,7 +1,7 @@
 // src/lib/ai/index.ts
 // IA usando Google Gemini (gratis con AI Studio key)
 
-import type { Trail, WeatherForecast, TrekPlan, UserProfile, ChecklistItem } from '@/types'
+import type { Route, WeatherForecast, TrekPlan, UserProfile, ChecklistItem } from '@/types'
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? ''
 const GEMINI_MODEL   = 'gemini-2.5-flash'
@@ -48,29 +48,57 @@ function extractJSON(text: string): unknown {
   throw new Error('No se encontró JSON válido en la respuesta del modelo')
 }
 
-// ─── Regla de Naismith ────────────────────────────────────────
-function estimateTime(distanceKm: number, elevationGain: number) {
-  const upH   = distanceKm / 5 + elevationGain / 600
-  const downH = distanceKm / 5 * 0.6
-  const fmt   = (h: number) => {
-    const hours = Math.floor(h)
-    const mins  = Math.round((h - hours) * 60)
-    return mins > 0 ? `${hours}h ${mins}min` : `${hours}h`
-  }
-  return { hours: Math.round(upH * 10) / 10, display: `${fmt(upH)} subida · ${fmt(downH)} bajada` }
+// ─── Extraer destino (con fallback sin IA) ────────────────────
+
+/**
+ * Palabras a descartar del texto libre antes de buscar la ruta.
+ *
+ * Se filtra por palabra completa, no por subcadena: quitar "al" sin delimitar
+ * mutilaba nombres reales ("salto" → "s to").
+ *
+ * Se conservan artículos y preposiciones ("de", "del", "la") porque forman parte
+ * de muchos topónimos chilenos: Salto *del* Apoquindo, Cajón *del* Maipo.
+ * Se descarta "chile": la fuente es íntegramente chilena y el término, en una
+ * búsqueda que exige todos los términos, deja la consulta sin resultados.
+ */
+const STOPWORDS = new Set([
+  // intención
+  'quiero', 'quisiera', 'queria', 'quería', 'me', 'gustaria', 'gustaría', 'hacer', 'haria', 'haría',
+  'ir', 'voy', 'vamos', 'planifica', 'planificar', 'planificarme', 'planeame', 'planéame', 'arma',
+  'armar', 'trekking', 'senderismo', 'caminata', 'excursion', 'excursión', 'subir', 'escalar',
+  'visitar', 'conocer', 'como', 'cómo', 'deberia', 'debería', 'puedo', 'podria', 'podría',
+  'recomienda', 'recomiendame', 'recomiéndame', 'al', 'un', 'una', 'para',
+  // fechas
+  'hoy', 'mañana', 'manana', 'este', 'esta', 'proximo', 'próximo', 'proxima', 'próxima', 'siguiente',
+  'fin', 'semana', 'finde', 'sabado', 'sábado', 'domingo', 'lunes', 'martes', 'miercoles',
+  'miércoles', 'jueves', 'viernes', 'dia', 'día', 'dias', 'días',
+  'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre',
+  'octubre', 'noviembre', 'diciembre',
+  // país
+  'chile', 'chileno', 'chilena',
+])
+
+export function cleanQuery(query: string): string {
+  return query
+    .toLowerCase()
+    .replace(/[¿?¡!.,;:()"]/g, ' ')
+    .split(/\s+/)
+    .filter((w) => w && !STOPWORDS.has(w))
+    .join(' ')
+    .trim()
 }
 
-// ─── Extraer destino (con fallback sin IA) ────────────────────
 export async function extractDestination(query: string): Promise<{
-  location: string; date: string | null
+  location: string
+  date: string | null
 } | null> {
-
-  // Intento 1: usar Gemini para extraer destino
+  // Intento 1: usar Gemini para extraer el destino.
   try {
     const system = 'Eres un extractor de datos. Responde ÚNICAMENTE con JSON válido, sin texto extra ni markdown.'
-    const user   = `De esta consulta: "${query}"
-Responde solo: {"location": "nombre del lugar en Chile", "date": "YYYY-MM-DD o null"}
-Ejemplo: "quiero ir al cerro La Campana en Olmué" → {"location": "cerro La Campana Olmué Chile", "date": null}`
+    const user = `De esta consulta: "${query}"
+Responde solo: {"location": "nombre del cerro, sendero o parque", "date": "YYYY-MM-DD o null"}
+El campo location debe ser SOLO el nombre propio del lugar, sin el país y sin verbos.
+Ejemplo: "quiero ir al cerro La Campana en Olmué el sábado" → {"location": "Cerro La Campana", "date": null}`
 
     const raw = await chat(system, user)
     const result = extractJSON(raw) as { location: string; date: string | null }
@@ -82,43 +110,50 @@ Ejemplo: "quiero ir al cerro La Campana en Olmué" → {"location": "cerro La Ca
     console.error('[extractDestination] Gemini falló, usando fallback:', err)
   }
 
-  // Intento 2: fallback sin IA — limpiar la consulta y usarla directo
-  console.log('[extractDestination] Usando fallback directo con query:', query)
-  const cleaned = query
-    .toLowerCase()
-    .replace(/quiero|hacer|trekking|senderismo|al|a la|en el|en la|como|cómo|debería|planificarme|planificar|ir|un|una|me/gi, '')
-    .replace(/\s+/g, ' ')
-    .trim()
+  // Intento 2: fallback sin IA — quitar las palabras de intención y fecha.
+  const cleaned = cleanQuery(query)
+  console.log('[extractDestination] Fallback sin IA:', JSON.stringify(cleaned))
 
-  if (cleaned.length > 2) {
-    return { location: cleaned + ' Chile', date: null }
-  }
-
-  return null
+  return cleaned.length > 2 ? { location: cleaned, date: null } : null
 }
 
 // ─── Generar plan completo ────────────────────────────────────
+
+/** Describe la ruta usando solo los campos que la fuente declara. */
+function describeRoute(route: Route): string {
+  const lines = [`- Nombre: ${route.name}`]
+  if (route.distance_km !== undefined) lines.push(`- Distancia: ${route.distance_km} km`)
+  if (route.ascent_m !== undefined) lines.push(`- Desnivel de ascenso: +${route.ascent_m} m`)
+  if (route.descent_m !== undefined) lines.push(`- Desnivel de descenso: -${route.descent_m} m`)
+  if (route.summit_m !== undefined) lines.push(`- Altitud de cumbre: ${route.summit_m} m`)
+  if (route.duration) lines.push(`- Duración declarada: ${route.duration}`)
+  if (route.technical_difficulty) lines.push(`- Dificultad técnica: ${route.technical_difficulty}`)
+  if (route.trek_type) lines.push(`- Tipo: ${route.trek_type}`)
+  if (route.trail_quality) lines.push(`- Estado del sendero: ${route.trail_quality}`)
+  if (route.signage) lines.push(`- Señalización: ${route.signage}`)
+  if (route.infrastructure) lines.push(`- Infraestructura: ${route.infrastructure}`)
+  if (route.attractions.length) lines.push(`- Atractivos: ${route.attractions.join(', ')}`)
+  if (route.region) lines.push(`- Zona: ${route.region}`)
+  return lines.join('\n')
+}
+
 export async function generateTrekPlan(
-  trail: Trail,
+  route: Route,
   weather: WeatherForecast,
   userProfile: UserProfile,
   originalQuery: string,
 ): Promise<TrekPlan> {
-  const time = estimateTime(trail.distance_km, trail.elevation_gain_m)
-
   const system = `Eres el planificador de trekking de hAIke.
 Generas checklists personalizados cruzando datos de ruta, clima y perfil del usuario.
+Los datos de la ruta provienen de una fuente documentada: úsalos tal cual, no los recalcules
+ni inventes cifras que no aparezcan.
 Responde ÚNICAMENTE con un objeto JSON válido. Sin texto, sin markdown, sin explicaciones.
 Textos en español chileno.`
 
   const user = `Consulta: "${originalQuery}"
 
-RUTA:
-- Nombre: ${trail.name}
-- Distancia: ${trail.distance_km} km
-- Desnivel: +${trail.elevation_gain_m} m
-- Altitud máxima: ${trail.max_elevation_m} m
-- Dificultad: ${trail.difficulty}
+RUTA (datos declarados por ${route.source}):
+${describeRoute(route)}
 
 CLIMA:
 - Temperatura: ${weather.temperature_min}°C a ${weather.temperature_max}°C
@@ -132,8 +167,6 @@ USUARIO:
 - Nivel: ${userProfile.fitness_level}
 - Experiencia trekking: ${userProfile.experience_trekking ? 'sí' : 'no'}
 - Grupo: ${userProfile.group_size ?? 1} persona(s)
-
-TIEMPO ESTIMADO: ${time.display}
 
 Responde exactamente con este JSON:
 {
@@ -152,7 +185,7 @@ Responde exactamente con este JSON:
 }
 
 Reglas:
-- food_checklist: 5-8 ítems. Agua: ~500ml por hora de trekking.
+- food_checklist: 5-8 ítems. Ajusta el agua a la duración declarada de la ruta.
 - clothing_checklist: 6-9 ítems adaptados al clima.
 - gear_checklist: 4-6 ítems de seguridad.
 - priority: "essential", "recommended" u "optional".
@@ -169,11 +202,8 @@ Reglas:
   }
 
   return {
-    trail,
+    route,
     weather,
-    difficulty_label:         trail.difficulty,
-    estimated_time_hours:     time.hours,
-    estimated_time_display:   time.display,
     departure_recommendation: json.departure_recommendation,
     food_checklist:           json.food_checklist,
     clothing_checklist:       json.clothing_checklist,

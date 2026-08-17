@@ -1,146 +1,223 @@
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { AppShell } from '@/components/AppShell'
 import { Icon } from '@/components/Icon'
 import { DifficultyBadge } from '@/components/RouteCard'
-import { SAMPLE_ROUTES, DIFFICULTY_LABEL } from '@/lib/sampleData'
+import { getRoute, fromRouteId } from '@/lib/wikiexplora'
+
+/** Campo declarado; se omite por completo si la fuente no lo publica. */
+function Fact({ label, value, icon }: { label: string; value?: string; icon: string }) {
+  if (!value) return null
+  return (
+    <div className="bg-surface-container-low border border-outline-variant rounded-lg p-4 flex flex-col gap-2">
+      <Icon name={icon} className="text-on-surface-variant text-[20px]" />
+      <span className="font-label-md text-label-md text-on-surface-variant">{label}</span>
+      <span className="font-mono-data text-mono-data text-on-surface">{value}</span>
+    </div>
+  )
+}
 
 export default async function RouteDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const route = SAMPLE_ROUTES.find((r) => r.id === id) ?? SAMPLE_ROUTES[0]
-  const est = `${Math.round(route.distance_km / 4)}-${Math.round(route.distance_km / 3)} hrs`
+  const title = fromRouteId(id)
 
-  const tabs = ['Overview', 'Itinerary', 'Gear List', 'Reviews']
+  let route
+  try {
+    route = await getRoute(title)
+  } catch {
+    return (
+      <AppShell>
+        <div className="flex-grow flex flex-col items-center justify-center text-center gap-4 px-margin-mobile py-xl">
+          <Icon name="cloud_off" className="text-tertiary text-4xl" />
+          <h1 className="font-headline-md text-headline-md text-on-surface">No pude cargar la ficha</h1>
+          <p className="font-body-lg text-on-surface-variant max-w-md">
+            La fuente no respondió. Inténtalo de nuevo en unos segundos.
+          </p>
+          <Link href="/routes" className="text-primary underline underline-offset-2 font-label-md">
+            Volver a rutas
+          </Link>
+        </div>
+      </AppShell>
+    )
+  }
+
+  if (!route) notFound()
+
+  const plannerQuery = `Planifica un trekking en ${route.name}`
+  const km = route.distance_km !== undefined ? `${route.distance_km} km` : undefined
 
   return (
     <AppShell topNav={false}>
       {/* Hero */}
-      <header className="relative w-full min-h-[420px] md:min-h-[480px] flex items-end pb-12 px-margin-mobile md:px-margin-desktop bg-topo overflow-hidden">
+      <header className="relative w-full min-h-[380px] md:min-h-[440px] flex items-end pb-12 px-margin-mobile md:px-margin-desktop bg-topo overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-transparent" />
-        <div className="relative z-10 w-full max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-end gap-8">
-          <div>
-            <Link href="/routes" className="font-label-md text-label-md text-on-surface-variant hover:text-primary inline-flex items-center gap-1 mb-4">
-              <Icon name="arrow_back" className="text-[16px]" /> Volver a rutas
-            </Link>
-            <span className="font-label-md text-label-md text-secondary tracking-widest uppercase mb-2 block">{route.location}</span>
-            <h1 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">
-              {route.name}
-            </h1>
-            <div className="flex gap-4 items-center flex-wrap">
+        <div className="relative z-10 w-full max-w-[1280px] mx-auto">
+          <Link
+            href="/routes"
+            className="font-label-md text-label-md text-on-surface-variant hover:text-primary inline-flex items-center gap-1 mb-4"
+          >
+            <Icon name="arrow_back" className="text-[16px]" /> Volver a rutas
+          </Link>
+          {route.region && (
+            <span className="font-label-md text-label-md text-secondary tracking-widest uppercase mb-2 block">
+              {route.region}
+              {route.nearest_city && ` · ${route.nearest_city}`}
+            </span>
+          )}
+          <h1 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">
+            {route.name}
+          </h1>
+          <div className="flex gap-3 items-center flex-wrap">
+            {km && (
               <span className="bg-surface-container-high border border-outline-variant px-3 py-1 rounded-full font-mono-data text-mono-data text-on-surface flex items-center gap-2">
-                <Icon name="hiking" className="text-[16px]" /> {route.distance_km}km
+                <Icon name="hiking" className="text-[16px]" /> {km}
               </span>
+            )}
+            {route.ascent_m !== undefined && (
               <span className="bg-surface-container-high border border-outline-variant px-3 py-1 rounded-full font-mono-data text-mono-data text-on-surface flex items-center gap-2">
-                <Icon name="landscape" className="text-[16px]" /> +{route.elevation_gain_m}m
+                <Icon name="trending_up" className="text-[16px]" /> +{route.ascent_m.toLocaleString('es')} m
               </span>
-              <DifficultyBadge difficulty={route.difficulty} />
-            </div>
-          </div>
-
-          {/* Elevation chart widget */}
-          <div className="w-full md:w-1/3 h-32 relative bg-surface-container-low border border-outline-variant rounded-lg p-4">
-            <div className="absolute top-2 left-3 font-label-md text-label-md text-on-surface-variant">Perfil de elevación</div>
-            <svg className="w-full h-full mt-4" preserveAspectRatio="none" viewBox="0 0 100 40">
-              <defs>
-                <linearGradient id="elevGrad" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor="#91d69d" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="#91d69d" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path d="M0,40 L0,30 Q10,25 20,28 T40,15 T60,20 T80,5 L100,10 L100,40 Z" fill="url(#elevGrad)" />
-              <path d="M0,30 Q10,25 20,28 T40,15 T60,20 T80,5 L100,10" fill="none" stroke="#91d69d" strokeWidth="1.5" />
-            </svg>
+            )}
+            {route.duration && (
+              <span className="bg-surface-container-high border border-outline-variant px-3 py-1 rounded-full font-mono-data text-mono-data text-on-surface flex items-center gap-2">
+                <Icon name="schedule" className="text-[16px]" /> {route.duration}
+              </span>
+            )}
+            {route.technical_difficulty && <DifficultyBadge difficulty={route.technical_difficulty} />}
           </div>
         </div>
       </header>
 
-      {/* Two column */}
+      {/* Dos columnas */}
       <div className="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12 flex flex-col lg:flex-row gap-gutter w-full">
         <div className="w-full lg:w-2/3 flex flex-col gap-12">
-          {/* Tabs (presentational) */}
-          <div className="flex gap-8 border-b border-outline-variant overflow-x-auto pb-2">
-            {tabs.map((t, i) => (
-              <button
-                key={t}
-                className={
-                  i === 0
-                    ? 'font-title-lg text-title-lg text-primary border-b-2 border-primary pb-2 whitespace-nowrap'
-                    : 'font-title-lg text-title-lg text-on-surface-variant hover:text-primary transition-colors pb-2 whitespace-nowrap'
-                }
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-
+          {/* Ficha técnica */}
           <section>
-            <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-              {route.name} es una ruta de dificultad {DIFFICULTY_LABEL[route.difficulty].toLowerCase()} en {route.location}.
-              Combina tramos técnicos con vistas alpinas excepcionales, exigiendo un ritmo constante y equipo fiable.
-              La exposición sostenida demanda tanto resistencia física como solidez psicológica.
-            </p>
+            <h2 className="font-title-lg text-title-lg text-on-surface mb-4">Ficha técnica</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <Fact label="Distancia" value={km} icon="hiking" />
+              <Fact
+                label="Desnivel de ascenso"
+                value={route.ascent_m !== undefined ? `+${route.ascent_m.toLocaleString('es')} m` : undefined}
+                icon="trending_up"
+              />
+              <Fact
+                label="Desnivel de descenso"
+                value={route.descent_m !== undefined ? `-${route.descent_m.toLocaleString('es')} m` : undefined}
+                icon="trending_down"
+              />
+              <Fact
+                label="Altitud de cumbre"
+                value={route.summit_m !== undefined ? `${route.summit_m.toLocaleString('es')} m` : undefined}
+                icon="terrain"
+              />
+              <Fact
+                label="Altitud media"
+                value={
+                  route.mean_altitude_m !== undefined ? `${route.mean_altitude_m.toLocaleString('es')} m` : undefined
+                }
+                icon="landscape"
+              />
+              <Fact label="Duración" value={route.duration} icon="schedule" />
+              <Fact label="Dificultad técnica" value={route.technical_difficulty} icon="fitness_center" />
+              <Fact label="Tipo de trek" value={route.trek_type} icon="explore" />
+              <Fact label="Estado del sendero" value={route.trail_quality} icon="route" />
+              <Fact label="Señalización" value={route.signage} icon="signpost" />
+              <Fact label="Infraestructura" value={route.infrastructure} icon="cabin" />
+              <Fact label="Belleza escénica" value={route.scenic_beauty} icon="photo_camera" />
+              <Fact label="Recorrido" value={route.round_trip} icon="sync_alt" />
+            </div>
+            {route.distance_note && (
+              <p className="font-body-sm text-body-sm text-on-surface-variant mt-4 flex items-start gap-2">
+                <Icon name="info" className="text-[16px] mt-0.5 flex-shrink-0" />
+                {route.distance_note}
+              </p>
+            )}
           </section>
 
-          {/* AI Synthesis */}
-          <section className="bg-surface-container-high border border-outline-variant rounded-xl p-6 relative overflow-hidden ai-pulse">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
-            <div className="flex items-center gap-3 mb-4 flex-wrap">
-              <Icon name="psychology" className="text-primary" />
-              <h3 className="font-title-lg text-title-lg text-primary">Síntesis hAIke</h3>
-              <span className="bg-surface-container-highest px-2 py-0.5 rounded font-mono-data text-[11px] text-on-surface-variant">
-                47 reseñas analizadas
-              </span>
-            </div>
-            <p className="font-body-lg text-body-lg text-on-surface italic border-l-2 border-primary pl-4">
-              &ldquo;Vistas espectaculares en todo el recorrido. Varios reportes de actividad de fauna cerca del punto
-              medio: llevar disuasivo es esencial. Las fuentes de agua escasean en el tramo central, planifica en
-              consecuencia.&rdquo;
-            </p>
-          </section>
+          {/* Atractivos */}
+          {route.attractions.length > 0 && (
+            <section>
+              <h2 className="font-title-lg text-title-lg text-on-surface mb-4">Atractivos</h2>
+              <div className="flex flex-wrap gap-2">
+                {route.attractions.map((a) => (
+                  <span
+                    key={a}
+                    className="bg-surface-container-high border border-outline-variant rounded-full px-3 py-1.5 font-label-md text-label-md text-on-surface"
+                  >
+                    {a}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
 
-          {/* Terrain data */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-surface-container-low border border-outline-variant rounded-lg p-6 flex flex-col gap-2">
-              <Icon name="water_drop" className="text-on-surface-variant" />
-              <div className="font-label-md text-label-md text-on-surface-variant">Disponibilidad de agua</div>
-              <div className="font-title-lg text-title-lg text-on-surface">Escasa (tramo medio)</div>
-            </div>
-            <div className="bg-surface-container-low border border-outline-variant rounded-lg p-6 flex flex-col gap-2">
-              <Icon name="thermostat" className="text-on-surface-variant" />
-              <div className="font-label-md text-label-md text-on-surface-variant">Temp. media</div>
-              <div className="font-title-lg text-title-lg text-on-surface">12°C - 24°C</div>
+          {/* Atribución */}
+          <section className="bg-surface-container-low border border-outline-variant rounded-lg p-6">
+            <div className="flex items-start gap-3">
+              <Icon name="menu_book" className="text-secondary" />
+              <div>
+                <h3 className="font-title-md text-title-md text-on-surface mb-1">Fuente de los datos</h3>
+                <p className="font-body-md text-on-surface-variant mb-3">
+                  Toda la información técnica de esta ruta proviene de la ficha publicada en {route.source} por su
+                  comunidad. hAIke no calcula ni estima estos valores.
+                </p>
+                <a
+                  href={route.source_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-label-md text-label-md text-primary hover:underline underline-offset-2 inline-flex items-center gap-1"
+                >
+                  Ver ficha completa en {route.source} <Icon name="open_in_new" className="text-[14px]" />
+                </a>
+              </div>
             </div>
           </section>
         </div>
 
-        {/* Sticky logistics */}
+        {/* Logística sticky */}
         <aside className="w-full lg:w-1/3">
-          <div className="sticky top-24 bg-surface-container-low border border-outline-variant rounded-xl p-6 flex flex-col gap-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-            <h3 className="font-title-lg text-title-lg text-on-surface">Logística de la ruta</h3>
+          <div className="sticky top-8 bg-surface-container-low border border-outline-variant rounded-xl p-6 flex flex-col gap-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+            <h3 className="font-title-lg text-title-lg text-on-surface">Resumen</h3>
             <ul className="flex flex-col gap-4 border-t border-outline-variant pt-4">
-              <li className="flex justify-between items-center pb-2 border-b border-outline-variant/30">
-                <span className="font-body-md text-body-md text-on-surface-variant">Distancia</span>
-                <span className="font-mono-data text-mono-data text-on-surface">{route.distance_km} km</span>
-              </li>
-              <li className="flex justify-between items-center pb-2 border-b border-outline-variant/30">
-                <span className="font-body-md text-body-md text-on-surface-variant">Desnivel positivo</span>
-                <span className="font-mono-data text-mono-data text-on-surface">+{route.elevation_gain_m} m</span>
-              </li>
-              <li className="flex justify-between items-center pb-2 border-b border-outline-variant/30">
-                <span className="font-body-md text-body-md text-on-surface-variant">Tiempo estimado</span>
-                <span className="font-mono-data text-mono-data text-on-surface">{est}</span>
-              </li>
+              {[
+                { label: 'Distancia', value: km },
+                {
+                  label: 'Desnivel',
+                  value: route.ascent_m !== undefined ? `+${route.ascent_m.toLocaleString('es')} m` : undefined,
+                },
+                { label: 'Duración', value: route.duration },
+                { label: 'Dificultad', value: route.technical_difficulty },
+              ]
+                .filter((r) => r.value)
+                .map((r) => (
+                  <li
+                    key={r.label}
+                    className="flex justify-between items-center pb-2 border-b border-outline-variant/30 gap-4"
+                  >
+                    <span className="font-body-md text-body-md text-on-surface-variant">{r.label}</span>
+                    <span className="font-mono-data text-mono-data text-on-surface text-right">{r.value}</span>
+                  </li>
+                ))}
             </ul>
             <Link
-              href={`/planner?q=${encodeURIComponent(`Planifica un trekking a ${route.name} en ${route.location}`)}`}
+              href={`/planner?q=${encodeURIComponent(plannerQuery)}`}
               className="w-full bg-primary hover:bg-primary-fixed text-on-primary font-title-lg text-title-lg py-4 rounded-lg flex items-center justify-center gap-2 transition-colors hover:shadow-[0_0_16px_rgba(145,214,157,0.3)]"
             >
               <Icon name="calendar_month" filled />
               Planificar esta ruta
             </Link>
-            <button className="w-full bg-transparent border border-outline-variant hover:bg-surface-container-high text-on-surface font-title-lg text-title-lg py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
-              <Icon name="download" />
-              Descargar GPX
-            </button>
+            {route.start && (
+              <a
+                href={`https://www.google.com/maps?q=${route.start.lat},${route.start.lon}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-transparent border border-outline-variant hover:border-primary text-on-surface hover:text-primary font-title-md text-sm py-3 rounded-lg flex items-center justify-center gap-2 transition-colors"
+              >
+                <Icon name="location_on" />
+                Ver punto de inicio
+              </a>
+            )}
           </div>
         </aside>
       </div>

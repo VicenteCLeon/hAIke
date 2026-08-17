@@ -3,15 +3,11 @@
 import { useState } from 'react'
 import { clsx } from 'clsx'
 import { Icon } from './Icon'
-import type { TrekPlan, ChecklistItem, Difficulty } from '@/types'
+import type { TrekPlan, ChecklistItem } from '@/types'
 
-const DIFF: Record<Difficulty, { label: string; cls: string }> = {
-  easy: { label: 'Fácil', cls: 'bg-secondary-container text-on-secondary-container border-outline-variant' },
-  moderate: { label: 'Moderado', cls: 'bg-secondary-container text-on-secondary-container border-outline-variant' },
-  hard: { label: 'Difícil', cls: 'bg-on-tertiary-fixed-variant text-tertiary-fixed border-tertiary-container' },
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
+/** Métrica declarada por la fuente; se omite si no la publica. */
+function Stat({ value, label }: { value?: string; label: string }) {
+  if (!value) return null
   return (
     <div className="bg-surface-container border border-outline-variant rounded-lg px-3 py-2 text-center flex-1">
       <div className="font-mono-data text-mono-data text-primary">{value}</div>
@@ -85,8 +81,7 @@ function Checklist({ title, items }: { title: string; items: ChecklistItem[] }) 
 }
 
 export function PlanCard({ plan }: { plan: TrekPlan }) {
-  const { trail, weather } = plan
-  const diff = DIFF[plan.difficulty_label]
+  const { route, weather } = plan
   return (
     <div className="space-y-5 animate-fadeIn">
       {plan.warning && (
@@ -98,19 +93,29 @@ export function PlanCard({ plan }: { plan: TrekPlan }) {
 
       <div>
         <div className="flex items-center gap-3 mb-3 flex-wrap">
-          <h3 className="font-title-lg text-title-lg text-primary">{trail.name}</h3>
-          <span className={clsx('px-2 py-0.5 rounded-full font-label-caps text-[10px] uppercase tracking-wider border', diff.cls)}>
-            {diff.label}
-          </span>
+          <h3 className="font-title-lg text-title-lg text-primary">{route.name}</h3>
+          {route.technical_difficulty && (
+            <span className="px-2 py-0.5 rounded-full font-label-caps text-[10px] uppercase tracking-wider border bg-surface-container-high text-on-surface-variant border-outline-variant">
+              {route.technical_difficulty}
+            </span>
+          )}
         </div>
-        <div className="flex gap-2 mb-3">
-          <Stat value={`${trail.distance_km} km`} label="Distancia" />
-          <Stat value={`+${trail.elevation_gain_m} m`} label="Desnivel" />
-          <Stat value={plan.estimated_time_display.split('·')[0].trim()} label="Subida" />
+        <div className="flex gap-2 mb-3 flex-wrap">
+          <Stat value={route.distance_km !== undefined ? `${route.distance_km} km` : undefined} label="Distancia" />
+          <Stat value={route.ascent_m !== undefined ? `+${route.ascent_m} m` : undefined} label="Desnivel" />
+          <Stat value={route.duration} label="Duración" />
         </div>
         <p className="text-body-md text-on-surface-variant bg-surface-container rounded-lg px-3 py-2">
           {plan.departure_recommendation}
         </p>
+        <a
+          href={route.source_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider hover:text-primary transition-colors inline-flex items-center gap-1 mt-2"
+        >
+          Datos de {route.source} <Icon name="open_in_new" className="text-[12px]" />
+        </a>
       </div>
 
       <div>

@@ -3,7 +3,7 @@ import { AppShell } from '@/components/AppShell'
 import { AISearchBar } from '@/components/AISearchBar'
 import { RouteCard } from '@/components/RouteCard'
 import { Icon } from '@/components/Icon'
-import { SAMPLE_ROUTES, USER_STATS, SEARCH_SUGGESTIONS } from '@/lib/sampleData'
+import { FEATURED_ROUTES, SEARCH_SUGGESTIONS } from '@/lib/sampleData'
 
 function StatCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -19,24 +19,24 @@ export default function DashboardPage() {
   return (
     <AppShell>
       <div className="flex-grow p-margin-mobile md:p-margin-desktop flex flex-col gap-8 max-w-[1280px] mx-auto w-full">
-        {/* User Stats */}
+        {/* De dónde salen los datos */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-          <StatCard label="Completadas">
+          <StatCard label="Rutas documentadas">
             <div className="flex items-baseline gap-2">
-              <span className="font-display-lg text-display-lg text-primary">{USER_STATS.completed}</span>
-              <span className="font-body-lg text-body-lg text-on-surface">Rutas</span>
+              <span className="font-display-lg text-display-lg text-primary">500+</span>
+              <span className="font-body-lg text-body-lg text-on-surface">en Chile</span>
             </div>
           </StatCard>
-          <StatCard label="Recorridos">
-            <div className="flex items-baseline gap-2">
-              <span className="font-display-lg text-display-lg text-primary">{USER_STATS.distance_km}</span>
-              <span className="font-body-lg text-body-lg text-on-surface">km</span>
-            </div>
-          </StatCard>
-          <StatCard label="Próximo Trek">
+          <StatCard label="Ficha técnica">
             <div className="flex items-center gap-3 mt-1">
-              <Icon name="landscape" className="text-primary" />
-              <span className="font-title-lg text-title-lg text-on-surface">{USER_STATS.next_trek}</span>
+              <Icon name="menu_book" className="text-primary" />
+              <span className="font-title-lg text-title-lg text-on-surface">Wikiexplora</span>
+            </div>
+          </StatCard>
+          <StatCard label="Pronóstico">
+            <div className="flex items-center gap-3 mt-1">
+              <Icon name="cloudy_snowing" className="text-primary" />
+              <span className="font-title-lg text-title-lg text-on-surface">Open-Meteo</span>
             </div>
           </StatCard>
         </section>
@@ -72,7 +72,7 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter">
-            {SAMPLE_ROUTES.map((r) => (
+            {FEATURED_ROUTES.map((r) => (
               <RouteCard key={r.id} route={r} />
             ))}
           </div>

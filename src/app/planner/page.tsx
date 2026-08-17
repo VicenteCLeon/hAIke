@@ -53,9 +53,9 @@ function ActivePlanSidebar({ plan }: { plan: TrekPlan | null }) {
           <Icon name="map" className="text-primary" />
           Itinerario Activo
         </h2>
-        {plan && (
+        {plan?.route.distance_km !== undefined && (
           <span className="bg-surface-container-high px-2 py-1 rounded font-mono-data text-xs text-secondary border border-outline-variant">
-            {plan.trail.distance_km} KM
+            {plan.route.distance_km} KM
           </span>
         )}
       </div>
@@ -72,22 +72,30 @@ function ActivePlanSidebar({ plan }: { plan: TrekPlan | null }) {
           <>
             <div className="bg-surface-container-low border border-outline-variant rounded-xl p-4">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-title-md text-title-md text-primary">{plan.trail.name}</h3>
+                <h3 className="font-title-md text-title-md text-primary">{plan.route.name}</h3>
                 <Icon name="landscape" className="text-on-surface-variant text-sm" />
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm text-on-surface-variant font-mono-data">
-                <div className="flex items-center gap-1">
-                  <Icon name="hiking" className="text-[16px]" /> {plan.trail.distance_km}km
-                </div>
-                <div className="flex items-center gap-1">
-                  <Icon name="trending_up" className="text-[16px]" /> +{plan.trail.elevation_gain_m}m
-                </div>
-                <div className="flex items-center gap-1">
-                  <Icon name="schedule" className="text-[16px]" /> {plan.estimated_time_hours}h
-                </div>
-                <div className="flex items-center gap-1">
-                  <Icon name="terrain" className="text-[16px]" /> {plan.trail.max_elevation_m}m
-                </div>
+                {plan.route.distance_km !== undefined && (
+                  <div className="flex items-center gap-1">
+                    <Icon name="hiking" className="text-[16px]" /> {plan.route.distance_km}km
+                  </div>
+                )}
+                {plan.route.ascent_m !== undefined && (
+                  <div className="flex items-center gap-1">
+                    <Icon name="trending_up" className="text-[16px]" /> +{plan.route.ascent_m}m
+                  </div>
+                )}
+                {plan.route.duration && (
+                  <div className="flex items-center gap-1">
+                    <Icon name="schedule" className="text-[16px]" /> {plan.route.duration}
+                  </div>
+                )}
+                {plan.route.summit_m !== undefined && (
+                  <div className="flex items-center gap-1">
+                    <Icon name="terrain" className="text-[16px]" /> {plan.route.summit_m}m
+                  </div>
+                )}
               </div>
             </div>
 

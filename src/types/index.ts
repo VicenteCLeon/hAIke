@@ -1,28 +1,50 @@
 // src/types/index.ts
 // Tipos centrales de hAIke
 
-// ─── Senderos ────────────────────────────────────────────────
-export interface TrailNode {
+// ─── Rutas ────────────────────────────────────────────────────
+//
+// hAIke no mide senderos: consume los datos que una fuente externa ya publica.
+// Por eso casi todos los campos son opcionales — la fuente no siempre los
+// declara, y es preferible omitir un dato a inventarlo.
+
+export interface Coordinates {
   lat: number
   lon: number
-  elevation?: number
 }
 
-export type Difficulty = 'easy' | 'moderate' | 'hard'
-
-export interface Trail {
-  osm_id: number
-  osm_type: 'way' | 'relation'
+/** Resultado de búsqueda: lo mínimo para listar y enlazar. */
+export interface RouteSummary {
+  id: string
   name: string
-  difficulty: Difficulty
-  distance_km: number
-  elevation_gain_m: number
-  elevation_loss_m: number
-  max_elevation_m: number
-  min_elevation_m: number
-  surface?: string
-  nodes: TrailNode[]
-  tags: Record<string, string>
+  source: string
+  source_url: string
+  snippet?: string
+}
+
+/** Ficha completa, tal como la declara la fuente. */
+export interface Route extends RouteSummary {
+  distance_km?: number
+  ascent_m?: number
+  descent_m?: number
+  summit_m?: number
+  mean_altitude_m?: number
+  /** Etiqueta declarada, no calculada: "1 día", "3 horas o menos". */
+  duration?: string
+  /** Dificultad *técnica* según la fuente: "Muy Fácil", "Fácil", "Poco Difícil". */
+  technical_difficulty?: string
+  activity?: string
+  trek_type?: string
+  trail_quality?: string
+  signage?: string
+  infrastructure?: string
+  scenic_beauty?: string
+  attractions: string[]
+  region?: string
+  nearest_city?: string
+  round_trip?: string
+  distance_note?: string
+  start?: Coordinates
+  end?: Coordinates
 }
 
 // ─── Clima ────────────────────────────────────────────────────
@@ -39,14 +61,11 @@ export interface WeatherForecast {
   sunset: string
 }
 
-// ─── Planificación (respuesta de Claude) ─────────────────────
+// ─── Planificación (respuesta de la IA) ──────────────────────
 export interface TrekPlan {
-  trail: Trail
+  route: Route
   weather: WeatherForecast
-  difficulty_label: Difficulty
-  estimated_time_hours: number
-  estimated_time_display: string // "5h 30min subida · 1h 30min bajada"
-  departure_recommendation: string // "Salir antes de las 8:00 AM"
+  departure_recommendation: string
   food_checklist: ChecklistItem[]
   clothing_checklist: ChecklistItem[]
   gear_checklist: ChecklistItem[]
@@ -80,5 +99,12 @@ export interface PlanRequest {
 export interface PlanResponse {
   success: boolean
   plan?: TrekPlan
+  error?: string
+}
+
+export interface RoutesResponse {
+  success: boolean
+  query?: string
+  routes?: RouteSummary[]
   error?: string
 }

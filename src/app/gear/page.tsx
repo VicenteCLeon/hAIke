@@ -149,7 +149,7 @@ export default function GearPage() {
       .filter((i) => checkedGear.includes(i.key))
       .reduce((s, i) => s + i.grams, 0)
     const total = grams / 1000
-    const rec = plan ? recommendedKg(plan.estimated_time_hours) : 10
+    const rec = plan ? recommendedKg(plan.route.duration) : 10
     return { totalKg: total, recKg: rec, pct: Math.round((total / rec) * 100) }
   }, [categories, checkedGear, plan])
 
@@ -168,9 +168,9 @@ export default function GearPage() {
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
               {plan ? (
                 <>
-                  Generada por hAIke IA para{' '}
-                  <span className="text-primary">{plan.trail.name}</span> · {plan.trail.distance_km} km ·{' '}
-                  {plan.estimated_time_display}
+                  Generada por hAIke IA para <span className="text-primary">{plan.route.name}</span>
+                  {plan.route.distance_km !== undefined && ` · ${plan.route.distance_km} km`}
+                  {plan.route.duration && ` · ${plan.route.duration}`}
                 </>
               ) : (
                 'Gestión inteligente de carga basada en predicciones de la ruta. Optimizado para máximo rendimiento.'

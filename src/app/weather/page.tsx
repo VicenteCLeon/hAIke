@@ -117,8 +117,8 @@ export default function WeatherPage() {
   }
 
   const w = plan.weather
-  const trail = plan.trail
-  const start = trail.nodes[0]
+  const route = plan.route
+  const start = route.start
   const metrics = metricsFor(plan)
 
   return (
@@ -133,10 +133,10 @@ export default function WeatherPage() {
                 Ruta activa
               </p>
               <h1 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">
-                {trail.name}
+                {route.name}
               </h1>
               <p className="font-body-md text-on-surface-variant">
-                {trail.max_elevation_m}m máx
+                {route.summit_m !== undefined && `${route.summit_m}m cumbre`}
                 {start && ` • Lat: ${start.lat.toFixed(3)} Lon: ${start.lon.toFixed(3)}`}
               </p>
             </div>
@@ -238,24 +238,26 @@ export default function WeatherPage() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-md">
               {[
-                { label: 'Distancia', value: `${trail.distance_km}`, unit: 'km' },
-                { label: 'Desnivel +', value: `${trail.elevation_gain_m}`, unit: 'm' },
-                { label: 'Altitud máx', value: `${trail.max_elevation_m}`, unit: 'm' },
-                { label: 'Duración', value: `${plan.estimated_time_hours}`, unit: 'h' },
-              ].map((d) => (
-                <div key={d.label} className="flex flex-col gap-xs">
-                  <span className="font-technical-mono text-technical-mono text-on-surface-variant uppercase tracking-wider">
-                    {d.label}
-                  </span>
-                  <span className="font-headline-md text-headline-md text-on-surface leading-none">
-                    {d.value}
-                    <span className="font-body-md text-on-surface-variant ml-1">{d.unit}</span>
-                  </span>
-                </div>
-              ))}
+                { label: 'Distancia', value: route.distance_km?.toString(), unit: 'km' },
+                { label: 'Desnivel +', value: route.ascent_m?.toString(), unit: 'm' },
+                { label: 'Cumbre', value: route.summit_m?.toString(), unit: 'm' },
+                { label: 'Duración', value: route.duration, unit: '' },
+              ]
+                .filter((d) => d.value)
+                .map((d) => (
+                  <div key={d.label} className="flex flex-col gap-xs">
+                    <span className="font-technical-mono text-technical-mono text-on-surface-variant uppercase tracking-wider">
+                      {d.label}
+                    </span>
+                    <span className="font-headline-md text-headline-md text-on-surface leading-none">
+                      {d.value}
+                      {d.unit && <span className="font-body-md text-on-surface-variant ml-1">{d.unit}</span>}
+                    </span>
+                  </div>
+                ))}
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant mt-md">
-              {plan.estimated_time_display}
+              Datos declarados por {route.source}
             </p>
           </section>
 

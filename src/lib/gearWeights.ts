@@ -110,10 +110,13 @@ export function estimateGrams(itemName: string, priority: string = 'recommended'
 }
 
 /**
- * Peso recomendado de mochila: ~20% del peso corporal para trekking de día,
- * ajustado por la duración estimada de la ruta.
+ * Peso recomendado de mochila a partir de la duración **declarada** por la fuente.
+ *
+ * Aplica la guía habitual de montañismo (20% del peso corporal en salidas de día,
+ * 25% en travesías de varios días); no deduce nada del terreno.
  */
-export function recommendedKg(estimatedHours: number, bodyWeightKg = 70): number {
-  const ratio = estimatedHours > 8 ? 0.25 : 0.2
+export function recommendedKg(duration: string | undefined, bodyWeightKg = 70): number {
+  const multiDay = duration ? /\d+\s*d[íi]as|más de/i.test(duration) : false
+  const ratio = multiDay ? 0.25 : 0.2
   return Math.round(bodyWeightKg * ratio * 10) / 10
 }
