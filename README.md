@@ -56,11 +56,3 @@ src/
 │   └── ai/                 # Claude: extracción + generación
 └── types/                  # Tipos TypeScript compartidos
 ```
-
-## Próximos pasos
-
-- [ ] Persistencia con PostgreSQL + PostGIS
-- [ ] Perfil de usuario con historial de trekkings
-- [ ] Mapa interactivo con Mapbox GL
-- [ ] Plan de entrenamiento preparatorio
-- [ ] PWA offline con Service Worker
